@@ -20,6 +20,8 @@ namespace CreativeFactory.Entities
         [Required(ErrorMessageResourceName = "BodyFieldCannotBeEmpty", ErrorMessageResourceType = typeof (Resources.Resources))]
         public string Body { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+
         public int Order { get; set; }
 
         public int ArticleId { get; set; }

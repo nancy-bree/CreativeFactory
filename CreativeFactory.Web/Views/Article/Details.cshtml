@@ -1,4 +1,4 @@
-﻿@model CreativeFactory.Entities.Article
+﻿@model CreativeFactory.Web.Models.ArticleDetailsViewModel
 
 @{
     ViewBag.Title = Model.Title;
@@ -11,3 +11,14 @@
 <blockquote>
     @Html.DisplayFor(m => m.Description)
 </blockquote>
+
+@Html.ActionLink(@Resources.AddItemNav, "Add", "Item", new { articleId = ViewBag.ArticleId }, new { role = "button", @class = "btn btn-primary"})
+
+@if (Model.Items.Count > 0)
+{
+    Html.RenderPartial("~/Views/Shared/_ItemsList.cshtml", Model.Items);
+}
+else
+{
+    <p>@Resources.NoItemsFound</p>
+}

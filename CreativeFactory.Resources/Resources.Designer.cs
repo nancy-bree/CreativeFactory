@@ -106,6 +106,15 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Author:.
+        /// </summary>
+        public static string Author {
+            get {
+                return ResourceManager.GetString("Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Body of item is required..
         /// </summary>
         public static string BodyFieldCannotBeEmpty {
@@ -232,6 +241,15 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Items:.
+        /// </summary>
+        public static string Items {
+            get {
+                return ResourceManager.GetString("Items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to items.
         /// </summary>
         public static string ItemsCount {
@@ -318,6 +336,24 @@ namespace CreativeFactory.Resources {
         public static string NewPasswordFieldCannotBeEmpty {
             get {
                 return ResourceManager.GetString("NewPasswordFieldCannotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No articles found..
+        /// </summary>
+        public static string NoArticlesFound {
+            get {
+                return ResourceManager.GetString("NoArticlesFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No items found..
+        /// </summary>
+        public static string NoItemsFound {
+            get {
+                return ResourceManager.GetString("NoItemsFound", resourceCulture);
             }
         }
         
@@ -448,6 +484,15 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Articles tagged.
+        /// </summary>
+        public static string TaggedArticles {
+            get {
+                return ResourceManager.GetString("TaggedArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag name is required..
         /// </summary>
         public static string TagNameFieldCannotBeEmpty {
@@ -462,6 +507,24 @@ namespace CreativeFactory.Resources {
         public static string TagNameIsTooLong {
             get {
                 return ResourceManager.GetString("TagNameIsTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags:.
+        /// </summary>
+        public static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to none.
+        /// </summary>
+        public static string TagsNone {
+            get {
+                return ResourceManager.GetString("TagsNone", resourceCulture);
             }
         }
         

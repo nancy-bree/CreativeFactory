@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebMatrix.WebData;
 
 namespace CreativeFactory.Web.Controllers
 {
@@ -29,9 +30,9 @@ namespace CreativeFactory.Web.Controllers
         //
         // GET: /Item/Add
 
-        public ActionResult Add(/*int articleId*/)
+        public ActionResult Add(int articleId)
         {
-            //ViewBag.ArticleId = articleId;
+            ViewBag.ArticleId = articleId;
             return View();
         }
 
@@ -46,11 +47,8 @@ namespace CreativeFactory.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var md = new MarkdownDeep.Markdown();
-                    md.ExtraMode = true;
-                    var html = md.Transform(model.Body);
                     AddItem(model);
-                    return RedirectToAction("Index", "Home"/*, new { id = WebSecurity.CurrentUserId }*/);
+                    return RedirectToAction("Details", "Article", new { id = model.ArticleId });
                 }
             }
             catch (DataException)
@@ -58,6 +56,15 @@ namespace CreativeFactory.Web.Controllers
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
             return View(model);
+        }
+
+        //
+        // GET: /Item/Details
+
+        public ActionResult Details(int id = 1)
+        {
+            var item = unitOfWork.ItemRepository.GetByID(id);
+            return View(item);
         }
 
         public ActionResult SaveDraft(FormCollection form)
@@ -70,18 +77,40 @@ namespace CreativeFactory.Web.Controllers
 
         private void AddItem(Item model)
         {
-            /*var item = new Item
+            var md = new MarkdownDeep.Markdown();
+            md.ExtraMode = true;
+            var html = md.Transform(model.Body);
+            var item = new Item
             {
-                Title = model.Title,
-                UserId = WebSecurity.CurrentUserId
+                Title = String.IsNullOrWhiteSpace(model.Title) ? "..." : model.Title,
+                Body = html,
+                ArticleId = model.ArticleId,
+                Order = GetItemOrder(model.ArticleId)
             };
-            if (model.Tags != null)
-            {
-                SetTags(model.Tags, article);
-            }
-            unitOfWork.ArticleRepository.Insert(article);
-            unitOfWork.Save();*/
+            unitOfWork.ItemRepository.Insert(item);
+            unitOfWork.Save();
         }
 
+        private int GetItemOrder(int articleId)
+        {
+            var article = unitOfWork.ArticleRepository.GetByID(articleId);
+            if (article.Items.Count == 0) return 1;
+            else return article.Items.OrderBy(x => x.Order).Last().Order + 1;
+        }
+
+        public JsonResult GetNewItemsOrder(string order)
+        {
+            var idList = order.Split(',').Select(x => Convert.ToInt32(x));
+            int i = 1;
+            foreach (var id in idList)
+            {
+                var item = unitOfWork.ItemRepository.GetByID(id);
+                item.Order = i;
+                unitOfWork.ItemRepository.Update(item);
+                i++;
+            }
+            unitOfWork.Save();
+            return Json(new { success = true });
+        }
     }
 }

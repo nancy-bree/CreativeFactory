@@ -1,0 +1,23 @@
+﻿@model CreativeFactory.Entities.Article
+
+<div class="row">
+    <div class="thumbnail col-md-6">
+        <h4>@Html.ActionLink(Model.Title, "Details", "Article", new { id = Model.Id}, null)</h4>
+        <h5>@Resources.Author @Model.User.UserName</h5>
+        @if (!String.IsNullOrWhiteSpace(Model.Description))
+        {
+            <p>@Resources.Description: @Model.Description</p>
+        }
+        <p>@Resources.Items @Model.Items.Count</p>
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;@Resources.Tags 
+        @if (Model.Tags.Count == 0)
+        {
+            <small>@Resources.TagsNone</small>
+        }
+        else
+        {
+            <small>@Html.Raw(String.Join(", ", Model.Tags.Select(tag => @Html.ActionLink(tag.Name, "Index", "Tag", new { id = tag.Id}, null).ToHtmlString()).ToArray()))</small>
+        }
+    </div>
+</div>
+

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using CreativeFactory.Web.Properties;
 
 namespace CreativeFactory.Web.Controllers
 {
@@ -21,9 +23,22 @@ namespace CreativeFactory.Web.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
             return View();
+        }
+
+        public ActionResult MyArticles(int userId, int page = 1)
+        {
+            ViewBag.UserId = userId;
+            return View(unitOfWork.ArticleRepository
+                .GetAllUserArticles(userId)
+                .ToPagedList(page, Settings.Default.ArticlesPerPage));
+        }
+
+        public ActionResult AllArticles(int page = 1)
+        {
+            return View(unitOfWork.ArticleRepository
+                .Get(orderBy: x => x.OrderByDescending(y => y.CreatedDate))
+                .ToPagedList(page, Settings.Default.ArticlesPerPage));
         }
 
         public ActionResult SetCulture(string culture)

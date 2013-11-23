@@ -1,0 +1,27 @@
+﻿@model PagedList.IPagedList<CreativeFactory.Entities.Article>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = Resources.MyArticles;
+}
+
+<div class="page-header center">
+  <h1>@ViewBag.Title</h1>
+</div>
+
+@if (Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        Html.RenderPartial("~/Views/Shared/_ArticlesList.cshtml", item);
+    }
+}
+else
+{
+    <h3 class="center">@Resources.NoArticlesFound</h3>
+}
+
+@Html.PagedListPager(Model
+                        , page => Url.Action("MyArticles", "Home"
+                        , new RouteValueDictionary {{"id", ViewBag.UserId}, {"page", page }})
+                        , PagedListRenderOptions.PageNumbersOnly)

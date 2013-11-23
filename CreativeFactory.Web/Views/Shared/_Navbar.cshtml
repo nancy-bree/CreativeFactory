@@ -12,8 +12,8 @@
               @if (Request.IsAuthenticated)
               {
                   <ul class="nav navbar-nav">
-                      <li>@Html.ActionLink(Resources.ArticlesNav, "", "Home")</li>
-                      <li>@Html.ActionLink(Resources.MyArticles, "", "Home", new { id = @WebSecurity.CurrentUserId}, null)</li>
+                      <li>@Html.ActionLink(Resources.ArticlesNav, "AllArticles", "Home")</li>
+                      <li>@Html.ActionLink(Resources.MyArticles, "MyArticles", "Home", new { userId = WebSecurity.CurrentUserId}, null)</li>
                       <li>@Html.ActionLink(Resources.AddArticleNav, "Add", "Article")</li>
                       @if (User.IsInRole("Administrator"))
                       {

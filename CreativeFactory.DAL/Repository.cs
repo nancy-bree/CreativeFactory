@@ -52,7 +52,21 @@ namespace CreativeFactory.DAL
         /// <param name="entity">Entity to insert.</param>
         public virtual void Insert(T entity)
         {
+            if (entity.GetType().GetProperty("CreatedDate") != null)
+            {
+                entity.GetType().GetProperty("CreatedDate").SetValue(entity, DateTime.Now);
+            }
             _dbSet.Add(entity);
+        }
+
+        /// <summary>
+        /// Update entity in database by its ID.
+        /// </summary>
+        /// <param name="id">Entity ID.</param>
+        public virtual void Update(int id)
+        {
+            T entity = _dbSet.Find(id);
+            Update(entity);
         }
 
         /// <summary>

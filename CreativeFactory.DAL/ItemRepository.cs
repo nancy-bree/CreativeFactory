@@ -9,8 +9,7 @@ namespace CreativeFactory.DAL
 {
     public class ItemRepository : Repository<Item>
     {
-        public ItemRepository(CreativeFactoryContext context) : base(context)
-        {
-        }
+        public ItemRepository(CreativeFactoryContext context) : base(context) { }
+
     }
 }

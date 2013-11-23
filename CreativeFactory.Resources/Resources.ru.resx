@@ -270,4 +270,25 @@
   <data name="ItemsCount" xml:space="preserve">
     <value>гл.</value>
   </data>
+  <data name="Author" xml:space="preserve">
+    <value>Автор:</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Главы:</value>
+  </data>
+  <data name="NoArticlesFound" xml:space="preserve">
+    <value>Тексты не найдены.</value>
+  </data>
+  <data name="TaggedArticles" xml:space="preserve">
+    <value>Тексты с меткой</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Метки:</value>
+  </data>
+  <data name="TagsNone" xml:space="preserve">
+    <value>нет меток</value>
+  </data>
+  <data name="NoItemsFound" xml:space="preserve">
+    <value>Главы не найдены.</value>
+  </data>
 </root>

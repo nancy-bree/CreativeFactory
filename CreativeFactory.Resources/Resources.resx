@@ -270,4 +270,25 @@
   <data name="ItemsCount" xml:space="preserve">
     <value>items</value>
   </data>
+  <data name="Author" xml:space="preserve">
+    <value>Author:</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Items:</value>
+  </data>
+  <data name="NoArticlesFound" xml:space="preserve">
+    <value>No articles found.</value>
+  </data>
+  <data name="TaggedArticles" xml:space="preserve">
+    <value>Articles tagged</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags:</value>
+  </data>
+  <data name="TagsNone" xml:space="preserve">
+    <value>none</value>
+  </data>
+  <data name="NoItemsFound" xml:space="preserve">
+    <value>No items found.</value>
+  </data>
 </root>

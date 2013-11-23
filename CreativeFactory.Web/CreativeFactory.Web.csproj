@@ -187,6 +187,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Models\ArticleDetailsViewModel.cs" />
     <Compile Include="Services\MarkdownDeepExtensions.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Global.asax.cs">
@@ -295,6 +296,16 @@
     <Content Include="Scripts\autosave.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\g.bar-min.js" />
+    <Content Include="Scripts\g.bar.js" />
+    <Content Include="Scripts\g.dot-min.js" />
+    <Content Include="Scripts\g.dot.js" />
+    <Content Include="Scripts\g.line-min.js" />
+    <Content Include="Scripts\g.line.js" />
+    <Content Include="Scripts\g.pie-min.js" />
+    <Content Include="Scripts\g.pie.js" />
+    <Content Include="Scripts\g.raphael-min.js" />
+    <Content Include="Scripts\g.raphael.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
@@ -321,6 +332,8 @@
     <Content Include="Scripts\mdd_styles.css" />
     <Content Include="Scripts\mdd_toolbar.png" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\raphael-min.js" />
+    <Content Include="Scripts\raphael.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -351,6 +364,12 @@
     <Content Include="Views\Article\Edit.cshtml" />
     <Content Include="Views\Article\Details.cshtml" />
     <Content Include="Views\Item\Add.cshtml" />
+    <Content Include="Views\Home\AllArticles.cshtml" />
+    <Content Include="Views\Shared\_ArticlesList.cshtml" />
+    <Content Include="Views\Tag\Index.cshtml" />
+    <Content Include="Views\Home\MyArticles.cshtml" />
+    <Content Include="Views\Item\Details.cshtml" />
+    <Content Include="Views\Shared\_ItemsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

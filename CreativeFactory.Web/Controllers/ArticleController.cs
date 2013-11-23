@@ -116,19 +116,21 @@ namespace CreativeFactory.Web.Controllers
         //
         // GET: /Article/Details
 
-        public ActionResult Details(int id = 1)
+        public ActionResult Details(int id = 1, int page = 1)
         {
             var article = unitOfWork.ArticleRepository.GetByID(id);
-            return View(article);
+            ViewBag.ArticleId = article.Id;
+            var model = new ArticleDetailsViewModel(article.Title, article.Description, article.CreatedDate, article.Tags, article.Items, page);
+            return View(model);
         }
 
         private void AddArticle(ArticleViewModel model)
         {
             var article = new Article
             {
-                Title = model.Title,
+                Title = String.IsNullOrWhiteSpace(model.Title) ? "..." : model.Title,
                 Description = model.Description,
-                UserId = WebSecurity.CurrentUserId
+                UserId = WebSecurity.CurrentUserId,
             };
             if (model.Tags != null)
             {

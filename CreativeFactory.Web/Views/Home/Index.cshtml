@@ -3,3 +3,26 @@
 }
 
 <h3>@Resources.Register</h3>
+
+<script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.min.js")"></script>
+<style>
+#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; height: 60px; }
+</style>
+<script>
+    $(document).ready(function () {
+        $('#sortable').sortable({
+            update: function (event, ui) {
+                var newOrder = $(this).sortable('toArray').toString();
+                $.get('@Url.Action("GetNewItemsOrder", "Item")' + '/', { order: newOrder });
+            }
+        });
+    });
+</script>
+
+<ul id="sortable">
+  <li id="1" class="thumbnail">Item 1</li>
+  <li id="2" class="thumbnail">Item 2</li>
+  <li id="3" class="thumbnail">Item 3</li>
+  <li id="4" class="thumbnail">Item 4</li>
+</ul>

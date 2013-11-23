@@ -14,6 +14,17 @@ namespace CreativeFactory.DAL
         }
 
         /// <summary>
+        /// Gets all user articls.
+        /// </summary>
+        /// <param name="userId">Uticle Id.</param>
+        /// <returns>List of articles contains to a user.</returns>
+        public IEnumerable<Article> GetAllUserArticles(int userId)
+        {
+            var query = _context.Article.Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedDate);
+            return query;
+        }
+
+        /// <summary>
         /// Gets all article tags.
         /// </summary>
         /// <param name="photoId">Article Id.</param>

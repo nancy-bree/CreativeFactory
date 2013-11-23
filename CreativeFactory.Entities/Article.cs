@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,8 @@ namespace CreativeFactory.Entities
         [Display(Name = "Description", ResourceType = typeof(Resources.Resources))]
         [StringLength(256, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "DescriptionIsTooLong")]
         public string Description { get; set; }
+
+        public DateTime CreatedDate { get; set; }
 
         public int UserId { get; set; }
 
