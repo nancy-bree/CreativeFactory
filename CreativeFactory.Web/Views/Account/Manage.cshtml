@@ -1,0 +1,12 @@
+﻿@model CreativeFactory.Web.Models.LocalPasswordModel
+@{
+    ViewBag.Title = Resources.ManageAccount;
+}
+
+<p class="message-success">@ViewBag.StatusMessage</p>
+
+@Html.Partial("_ChangePasswordPartial")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

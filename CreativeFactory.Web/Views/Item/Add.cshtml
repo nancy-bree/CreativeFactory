@@ -1,0 +1,60 @@
+﻿@model CreativeFactory.Entities.Item
+
+@{
+    ViewBag.Title = Resources.AddItemNav;
+}
+<link rel="stylesheet" type="text/css" href="/Scripts/mdd_styles.css" />
+<script type="text/javascript" src="/Scripts/MarkdownDeepLib.min.js"></script>
+@*<script type="text/javascript" src="/Scripts/jquery.form.min.js"></script>*@
+<script type="text/javascript" src="/Scripts/autosave.js"></script>
+
+<h2>@Resources.AddItemNav</h2>
+<p id="message" class="label label-success"></p>
+@using (Html.BeginForm("Add", "Item", FormMethod.Post, new { role = "form", id = "form-to-save", enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control"})
+        @Html.ValidationMessageFor(m => m.Title)
+    </div>
+    
+    <div class="form-group">
+        <div class="mdd_toolbar"></div>
+        @Html.TextAreaFor(m => Model.Body, 20, 5, new { @class="mdd_editor form-control", name = "content" })
+        <div class="mdd_resizer"></div>
+        <div class="mdd_preview"></div>
+        @Html.ValidationMessageFor(m => m.Body)
+    </div>
+    
+    <input type="submit" value="@Resources.AddItemNav" class="btn btn-primary" /> 
+}
+
+<script>
+    $(function () {
+        $("textarea.mdd_editor").MarkdownDeep({
+            help_location: "/Scripts/mdd_help.htm",
+            ExtraMode: true
+        });
+    })
+</script>
+
+<script>
+    $(function () {
+        $('#Body').autosave({
+            delay: 10000,
+            url: '@Url.Action("SaveDraft", "Item")' + '/',
+            afterSave: function () {
+                $("#message").html("Data updated successfully").show();//...show a message...
+                setTimeout('fadeMessage()', 3000);
+            }
+        });
+    });
+
+    function fadeMessage() {
+        $('#message').fadeOut('slow');
+    }
+</script>
+

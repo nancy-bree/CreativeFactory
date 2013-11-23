@@ -1,0 +1,140 @@
+﻿/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
+    background: url("bg.png");
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by its height */
+  margin: 0 auto -70px;
+  /* Pad bottom by footer height */
+  padding: 0 0 70px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+  height: 60px;
+  margin-top: 10px;
+}
+
+.footer-default {
+  background-color: #dd4814;
+  border-bottom-color: #bf3e11;
+  border-left-color: #bf3e11;
+  border-right-color: #bf3e11;
+  border-top-color: #bf3e11
+}
+
+.footer-inverse {
+  background-color: #772953;
+  border-bottom-color: #511c39;
+  border-left-color: #511c39;
+  border-right-color: #511c39;
+  border-top-color: #511c39;
+}
+
+.center {
+    text-align: center;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #e80c4d;
+    font-weight: bold;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #e80c4d;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #e80c4d;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.auto { 
+margin-left: auto !important;
+margin-right: auto !important;
+}
+
+/* voting style */
+.vote-span{
+  margin: 5px auto;
+  display: table;
+}
+.vote, .vote-score{
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  text-align: center;
+  color: #333;
+  font-size: 1.5em;
+  display: inline;
+}
+.vote-score{cursor: text; font-weight: bold;}
+
+.username-field {
+    margin: 5px auto;
+    display: table;
+    font-size: 1.5em;
+}
+
+/*
+------------------------------
+  Tag Cloud
+------------------------------
+*/
+
+#tags {
+    text-align: justify;
+}
+
+.tag1{font-size: 0.8em}
+.tag2{font-size: 0.9em}
+.tag3{font-size: 1em}
+.tag4{font-size: 1.2em}
+.tag5{font-size: 1.4em}
+.tag6{font-size: 1.7em}
+.tag7{font-size: 2.0em}
+
+/* .: OTHER :.*/
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+#wrap > .container {
+  padding: 60px 15px 0;
+}
+.container .credit {
+  margin: 20px 0;
+}
+
+#footer > .container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+code {
+  font-size: 80%;
+}

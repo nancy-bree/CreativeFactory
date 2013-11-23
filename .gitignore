@@ -15,7 +15,7 @@ build/
 [Bb]in/
 [Oo]bj/
 App_Data/
-_uploads/
+_drafts/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/

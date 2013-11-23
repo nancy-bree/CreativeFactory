@@ -1,0 +1,81 @@
+﻿<div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("CreativeFactory", "Index", "Home", null, new { @class = "navbar-brand"})
+          </div>
+          <div class="collapse navbar-collapse">
+              @if (Request.IsAuthenticated)
+              {
+                  <ul class="nav navbar-nav">
+                      <li>@Html.ActionLink(Resources.ArticlesNav, "", "Home")</li>
+                      <li>@Html.ActionLink(Resources.MyArticles, "", "Home", new { id = @WebSecurity.CurrentUserId}, null)</li>
+                      <li>@Html.ActionLink(Resources.AddArticleNav, "Add", "Article")</li>
+                      @if (User.IsInRole("Administrator"))
+                      {
+                          <li>@Html.ActionLink(Resources.UserManager, "Users", "Admin")</li>
+                      }
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                      <li>@Html.ActionLink("EN", "SetCulture", "Home", new { culture = "en-US" }, null)</li>
+                      <li>@Html.ActionLink("RU", "SetCulture", "Home", new { culture = "ru" }, null)</li>
+                      <li><a href="#" rel="~/Content/bootstrap.light.css" class="theme">@Resources.Light</a></li>
+                      <li><a href="#" rel="~/Content/bootstrap.dark.css" class="theme">@Resources.Dark</a></li>
+                      <li>
+                        <a href="@Url.Action("Manage", "Account")">
+                            <span class="glyphicon glyphicon-pencil" style="font-size:12pt;"></span>
+                            &nbsp;@User.Identity.Name
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("LogOff", "Account")">
+                            <span class="glyphicon glyphicon-log-out" style="font-size:12pt;"></span>
+                            &nbsp;@Resources.Logoff
+                        </a>
+                    </li>
+                </ul>
+              } 
+              else 
+              {
+                  <ul class="nav navbar-nav">
+                      <li>@Html.ActionLink(Resources.ArticlesNav, "", "Home")</li>
+                  </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("EN", "SetCulture", "Home", new { culture = "en-US" }, null)</li>
+                    <li>@Html.ActionLink("RU", "SetCulture", "Home", new { culture = "ru" }, null)</li>
+                    <li><a href="#" rel="~/Content/bootstrap.light.css" class="theme">@Resources.Light</a></li>
+                    <li><a href="#" rel="~/Content/bootstrap.dark.css" class="theme">@Resources.Dark</a></li>
+                    <li>
+                        <a href="@Url.Action("Register", "Account")">
+                            <span class="glyphicon glyphicon-check" style="font-size:12pt;"></span>&nbsp;
+                            @Resources.Register
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Login", "Account")">
+                            <span class="glyphicon glyphicon-log-in" style="font-size:12pt;"></span>&nbsp;
+                            @Resources.Login
+                        </a>
+                    </li>
+                </ul>
+            }
+          </div><!--/.nav-collapse -->
+        </div>
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.cookie.js")"></script>
+<script>
+    if ($.cookie("css")) {
+        $("link#site-theme").attr("href", $.cookie("css"));
+    }
+    $(document).ready(function () {
+        $("a.theme").click(function () {
+            $("link#site-theme").attr("href", $(this).attr('rel'));
+            $.cookie("css", $(this).attr('rel'), { expires: 10, path: '/' });
+            return false;
+        });
+    });
+</script>

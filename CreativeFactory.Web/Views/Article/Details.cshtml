@@ -1,0 +1,13 @@
+﻿@model CreativeFactory.Entities.Article
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div class="page-header center">
+  <h1>@Model.Title <small><i>(@Model.Items.Count @Resources.ItemsCount)</i></small></h1>
+</div>
+
+<blockquote>
+    @Html.DisplayFor(m => m.Description)
+</blockquote>

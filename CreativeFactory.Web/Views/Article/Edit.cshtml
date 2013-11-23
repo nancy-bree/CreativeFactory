@@ -1,0 +1,89 @@
+﻿@model CreativeFactory.Web.Models.ArticleViewModel
+
+@{
+    ViewBag.Title = Resources.EditArticle;
+}
+
+<link rel="stylesheet" href="@Url.Content("~/Content/themes/base/jquery-ui.css")" />
+<script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.min.js")"></script>
+
+<div class="page-header center">
+  <h1>@Resources.EditArticle</h1>
+</div>
+
+@using (Html.BeginForm("Edit", "Article", FormMethod.Post, new { role = "form", @class = "col-md-6", enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.Id)
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control"})
+        @Html.ValidationMessageFor(m => m.Title)
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control"})
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.Tags)
+        @Html.TextBoxFor(m => m.Tags, new { @class = "form-control"})
+        <small class="text-muted">Ex.: city, night, bridge</small>
+    </div>
+
+    <input type="submit" value="@Resources.EditArticle" class="btn btn-primary" /> 
+}
+
+<script>
+    $(function () {
+        function split(val) {
+            return val.split(/,\s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $("#Tags")
+          // don't navigate away from the field on tab when selecting an item
+          .bind("keydown", function (event) {
+              if (event.keyCode === $.ui.keyCode.TAB &&
+                  $(this).data("ui-autocomplete").menu.active) {
+                  event.preventDefault();
+              }
+          })
+          .autocomplete({
+              source: function (request, response) {
+                  var url = '@Url.Action("GetTags", "Tag")' + '/';
+                  $.getJSON(url, {
+                      term: extractLast(request.term)
+                  }, response);
+              },
+              search: function () {
+                  // custom minLength
+                  var term = extractLast(this.value);
+                  if (term.length < 2) {
+                      return false;
+                  }
+              },
+              focus: function () {
+                  // prevent value inserted on focus
+                  return false;
+              },
+              select: function (event, ui) {
+                  var terms = split(this.value);
+                  // remove the current input
+                  terms.pop();
+                  // add the selected item
+                  terms.push(ui.item.value);
+                  // add placeholder to get the comma-and-space at the end
+                  terms.push("");
+                  this.value = terms.join(", ");
+                  return false;
+              }
+          });
+    });
+  </script>
