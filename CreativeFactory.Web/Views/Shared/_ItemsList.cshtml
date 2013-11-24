@@ -1,12 +1,15 @@
 ﻿@model PagedList.IPagedList<CreativeFactory.Entities.Item>
 @using PagedList.Mvc
 @{int i = 1;}
-<div id="sortable">
+<div id="sortable" data-url="@Url.Action("GetNewItemsOrder", "Item")">
 @foreach (var item in Model)
 {
-        <div class="thumbnail col-md-6" id="@item.Id">
-            <h4>@i. @Html.ActionLink(item.Title, "Details", "Item", new { id = item.Id}, null)</h4>
-            <small>@item.CreatedDate</small>
+        <div class="row" id="@item.Id">
+            <div class="thumbnail col-md-6">
+                <h4>@i. @Html.ActionLink(item.Title, "Details", "Item", new { id = item.Id}, null)</h4>
+                <small>@item.CreatedDate</small>
+                @Html.ActionLink(Resources.Delete, "Delete", "Item", null, new { @class = "deleteBtn" })
+            </div>
         </div>
     i++;
 }
@@ -17,18 +20,49 @@
                     , PagedListRenderOptions.PageNumbersOnly)
 
 <script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.min.js")"></script>
-<style>
-#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; height: 60px; }
-</style>
+<script src="@Url.Content("~/Scripts/coffee/reorder.coffee")"></script>
 
 <script>
-    $(document).ready(function () {
-        $('#sortable').sortable({
-            update: function (event, ui) {
-                var newOrder = $(this).sortable('toArray').toString();
-                $.get('@Url.Action("GetNewItemsOrder", "Item")' + '/', { order: newOrder });
+    $(function () {
+        $(".deleteBtn").click(function (e) {
+            e.preventDefault();
+            pid = $(this).parent().parent().attr("id");
+            $('#dialog-confirm').dialog('open');
+        });
+        $("#dialog-confirm").dialog({
+            dialogClass: "alert alert-info",
+            open: function (event) {
+                $('.ui-dialog-buttonpane').find('button:contains("Cancel")').addClass('btn btn-primary btn-xs');
+                $('.ui-dialog-buttonpane').find('button:contains("Delete")').addClass('btn btn-primary btn-xs');
+                $(".ui-dialog-titlebar-close").hide();
+                $(".ui-dialog-title").hide();
+            },
+            resizable: false,
+            height: 100,
+            modal: true,
+            autoOpen: false,
+            buttons: {
+                "Delete": function () {
+                    deleteRecord(pid);
+                    $("div#" + pid).fadeOut("slow").remove();
+                    $(this).dialog("close");
+                },
+                Cancel: function () {
+                    $(this).dialog("close");
+                }
             }
         });
+
+        function deleteRecord(pid) {
+            $.ajax({
+                type: "POST",
+                url: $(".deleteBtn").attr("href"),
+                data: { id: pid }
+            });
+        };
     });
 </script>
+
+<div id="dialog-confirm">
+    Are you sure you want to delete this item?
+</div>

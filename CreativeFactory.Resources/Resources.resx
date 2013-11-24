@@ -291,4 +291,58 @@
   <data name="NoItemsFound" xml:space="preserve">
     <value>No items found.</value>
   </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="AddToAdmins" xml:space="preserve">
+    <value>Add to the Administrators</value>
+  </data>
+  <data name="AdminRole" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditUserInfo" xml:space="preserve">
+    <value>Edit User Info</value>
+  </data>
+  <data name="ExcludeFromAdmins" xml:space="preserve">
+    <value>Exclude from the Administrators</value>
+  </data>
+  <data name="PasswordReset" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="PasswordResetMsg" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="ResetFailure" xml:space="preserve">
+    <value>Password Reset Failure</value>
+  </data>
+  <data name="ResetFailureMsg" xml:space="preserve">
+    <value>There was a problem resetting your password. Please try again.</value>
+  </data>
+  <data name="ResetMsg" xml:space="preserve">
+    <value>To reset your password click on this link</value>
+  </data>
+  <data name="ResetSuccess" xml:space="preserve">
+    <value>Password Reset Success</value>
+  </data>
+  <data name="ResetSuccessMsg" xml:space="preserve">
+    <value>Your password has been reset. Please login using the new password.</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="UserRole" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
 </root>

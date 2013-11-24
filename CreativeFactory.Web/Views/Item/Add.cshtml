@@ -22,13 +22,18 @@
         @Html.TextBoxFor(m => m.Title, new { @class = "form-control"})
         @Html.ValidationMessageFor(m => m.Title)
     </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <div class="mdd_toolbar"></div>
+            @Html.TextAreaFor(m => Model.Body, 20, 5, new { @class="mdd_editor form-control", name = "content" })
+            <div class="mdd_resizer"></div>
+            @Html.ValidationMessageFor(m => m.Body)
+        </div>
     
-    <div class="form-group">
-        <div class="mdd_toolbar"></div>
-        @Html.TextAreaFor(m => Model.Body, 20, 5, new { @class="mdd_editor form-control", name = "content" })
-        <div class="mdd_resizer"></div>
-        <div class="mdd_preview"></div>
-        @Html.ValidationMessageFor(m => m.Body)
+        <div class="form-group col-md-6">
+            <label>Preview</label>
+            <div class="mdd_preview"></div>
+        </div>
     </div>
     
     <input type="submit" value="@Resources.AddItemNav" class="btn btn-primary" /> 

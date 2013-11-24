@@ -1,0 +1,109 @@
+﻿@model PagedList.IPagedList<CreativeFactory.Entities.User>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = Resources.Users;
+}
+
+<div class="page-header center">
+  <h1>@Resources.Users</h1>
+</div>
+
+<div class="thumbnail">
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:30%;">@Resources.Username</th>
+            <th style="width:30%;">@Resources.Email</th>
+            <th style="width:40%;">@Resources.Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+        <tr>
+            <td style="vertical-align:middle;">
+                @item.UserName
+            </td>
+            <td style="vertical-align:middle;">
+                @item.Email
+            </td>
+            <td style="vertical-align:middle;" id="@item.Id" data-username="@item.UserName" data-email="@item.Email">
+                @if (Roles.GetRolesForUser(item.UserName).Contains("Administrator"))
+                {
+                    @Html.ActionLink(Resources.ExcludeFromAdmins, "ChangeUserRole", "Admin"
+                    , null
+                    , new Dictionary<string, object>() {{"class", "adminBtn excludeFromAdmins btn btn-sm btn-danger"}, {"role", "button"}})
+                }
+                else
+                {
+                    @Html.ActionLink(Resources.AddToAdmins, "ChangeUserRole", "Admin"
+                    , null
+                    , new Dictionary<string, object>() {{"class", "adminBtn addToAdmins btn btn-sm btn-success"}, {"role", "button"}})
+                }
+                @Html.ActionLink(Resources.PasswordReset, "ResetUserPassword", "Admin"
+                 , null
+                 , new { @class = "resetPassword btn btn-sm btn-warning", role = "button" })
+                @Html.ActionLink(Resources.Delete, "Delete", "Admin"
+                , new { username = item.UserName}, new { @class = "deleteBtn btn btn-sm btn-info", role = "button" })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+</div>
+
+@Html.PagedListPager(Model
+                    , page => Url.Action("Users", "Admin", new RouteValueDictionary {{"page", page }})
+                    , PagedListRenderOptions.PageNumbersOnly)
+
+<script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.min.js")"></script>
+
+<script src="@Url.Content("~/Scripts/coffee/delete-user.js")"></script>
+<script src="@Url.Content("~/Scripts/coffee/reset-password.coffee")"></script>
+
+<script>
+    $(function () {
+        $(".adminBtn").click(function (e) {
+            e.preventDefault();
+            self = $(this)
+            pid = $(this).parent().attr("id");
+            username = $(this).parent().data("username");
+            if ($(this).hasClass("excludeFromAdmins")) {
+                $.ajax({
+                    type: "POST",
+                    url: $(".adminBtn").attr("href"),
+                    data: { username: username, act: "exclude" },
+                    success: function () {
+                        self.removeClass("excludeFromAdmins")
+                        .removeClass("btn-danger")
+                        .addClass("addToAdmins")
+                        .addClass("btn-success")
+                        .text("@Resources.AddToAdmins");
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: $(".adminBtn").attr("href"),
+                    data: { username: username, act: "add" },
+                    success: function () {
+                        self.removeClass("addToAdmins")
+                        .removeClass("btn-success")
+                        .addClass("excludeFromAdmins")
+                        .addClass("btn-danger")
+                        .text("@Resources.ExcludeFromAdmins");
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<div id="pswd-reset-modal">
+    Password has been reseted.
+</div>
+
+<div id="dialog-confirm">
+    Are you sure you want to delete this user?
+</div>

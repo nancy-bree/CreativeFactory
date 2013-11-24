@@ -67,6 +67,17 @@ namespace CreativeFactory.Web.Controllers
             return View(item);
         }
 
+        //
+        // POST: /Item/Delete
+
+        [HttpPost]
+        public JsonResult Delete(int id)
+        {
+            unitOfWork.ItemRepository.Delete(id);
+            unitOfWork.Save();
+            return Json(new { success = true });
+        }
+
         public ActionResult SaveDraft(FormCollection form)
         {
             // TODO: Save the form values and return a JSON result 

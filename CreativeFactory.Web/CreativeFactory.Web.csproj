@@ -41,6 +41,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxMin">
+      <HintPath>..\packages\AjaxMin.5.3.5068.16463\lib\net40\AjaxMin.dll</HintPath>
+    </Reference>
+    <Reference Include="LessCoffee">
+      <HintPath>..\packages\LessCoffee.2.5.1.0\lib\LessCoffee.dll</HintPath>
+    </Reference>
     <Reference Include="MarkdownDeep">
       <HintPath>..\packages\MarkdownDeep.Full.1.5\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
     </Reference>
@@ -182,6 +188,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -283,15 +290,16 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\coffee\change-role.js" />
+    <Content Include="Scripts\coffee\delete-user.js" />
+    <Content Include="Scripts\coffee\reorder.coffee" />
+    <Content Include="Scripts\coffee\delete-record.coffee" />
+    <Content Include="Scripts\coffee\reset-password.coffee" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\autosave.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -370,6 +378,11 @@
     <Content Include="Views\Home\MyArticles.cshtml" />
     <Content Include="Views\Item\Details.cshtml" />
     <Content Include="Views\Shared\_ItemsList.cshtml" />
+    <Content Include="Views\Admin\Users.cshtml" />
+    <Content Include="Views\Emails\ChngPasswordEmail.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\PasswordResetFailure.cshtml" />
+    <Content Include="Views\Account\PasswordResetSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

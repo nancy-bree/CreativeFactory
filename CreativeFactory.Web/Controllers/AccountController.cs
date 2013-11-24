@@ -146,6 +146,48 @@ namespace CreativeFactory.Web.Controllers
         }
 
         //
+        // POST: /Account/ResetPasswordConfirmation
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ResetPasswordConfirmation(ResetPasswordConfirmModel model)
+        {
+            if (WebSecurity.ResetPassword(model.Token, model.NewPassword))
+            {
+                return RedirectToAction("PasswordResetSuccess");
+            }
+            return RedirectToAction("PasswordResetFailure");
+        }
+
+        //
+        // GET: /Account/ResetPasswordConfirmation
+
+        [AllowAnonymous]
+        public ActionResult ResetPasswordConfirmation(string Id)
+        {
+            ResetPasswordConfirmModel model = new ResetPasswordConfirmModel() { Token = Id };
+            return View(model);
+        }
+
+        //
+        // GET: /Account/PasswordResetFailure
+
+        [AllowAnonymous]
+        public ActionResult PasswordResetFailure()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Account/PasswordResetSuccess
+
+        [AllowAnonymous]
+        public ActionResult PasswordResetSuccess()
+        {
+            return View();
+        }
+
+        //
         // GET: /Account/Manage
 
         [Authorize(Roles="Administrator")]

@@ -291,4 +291,58 @@
   <data name="NoItemsFound" xml:space="preserve">
     <value>Главы не найдены.</value>
   </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Действие</value>
+  </data>
+  <data name="AddToAdmins" xml:space="preserve">
+    <value>Сделать Администратором</value>
+  </data>
+  <data name="AdminRole" xml:space="preserve">
+    <value>Администратор</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Редактировать</value>
+  </data>
+  <data name="EditUserInfo" xml:space="preserve">
+    <value>Редактирование информации о пользователе</value>
+  </data>
+  <data name="ExcludeFromAdmins" xml:space="preserve">
+    <value>Исключить из Администраторов</value>
+  </data>
+  <data name="PasswordReset" xml:space="preserve">
+    <value>Сбросить пароль</value>
+  </data>
+  <data name="PasswordResetMsg" xml:space="preserve">
+    <value>Изменение пароля</value>
+  </data>
+  <data name="ResetFailure" xml:space="preserve">
+    <value>Ошибка при изменении пароля</value>
+  </data>
+  <data name="ResetFailureMsg" xml:space="preserve">
+    <value>При изменении пароля произошла ошибка. Повторите попытку.</value>
+  </data>
+  <data name="ResetMsg" xml:space="preserve">
+    <value>Чтобы сбросить пароль, перейдите по этой ссылке:</value>
+  </data>
+  <data name="ResetSuccess" xml:space="preserve">
+    <value>Пароль был успешно изменен</value>
+  </data>
+  <data name="ResetSuccessMsg" xml:space="preserve">
+    <value>Пароль был изменен. Вы можете войти в систему, используя новый пароль.</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Роль</value>
+  </data>
+  <data name="UserRole" xml:space="preserve">
+    <value>Пользователь</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Пользователи</value>
+  </data>
 </root>

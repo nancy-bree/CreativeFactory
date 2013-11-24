@@ -26,8 +26,8 @@
                       <li><a href="#" rel="~/Content/bootstrap.light.css" class="theme">@Resources.Light</a></li>
                       <li><a href="#" rel="~/Content/bootstrap.dark.css" class="theme">@Resources.Dark</a></li>
                       <li>
-                        <a href="@Url.Action("Manage", "Account")">
-                            <span class="glyphicon glyphicon-pencil" style="font-size:12pt;"></span>
+                        <a href="@Url.Action("MyArticles", "Home", new { userId = WebSecurity.CurrentUserId}, null)">
+                            <span class="glyphicon glyphicon-user" style="font-size:12pt;"></span>
                             &nbsp;@User.Identity.Name
                         </a>
                     </li>

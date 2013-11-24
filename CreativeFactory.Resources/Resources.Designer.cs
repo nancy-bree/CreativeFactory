@@ -61,11 +61,29 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string Accept {
+            get {
+                return ResourceManager.GetString("Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hello, .
         /// </summary>
         public static string Accost {
             get {
                 return ResourceManager.GetString("Accost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Action {
+            get {
+                return ResourceManager.GetString("Action", resourceCulture);
             }
         }
         
@@ -93,6 +111,24 @@ namespace CreativeFactory.Resources {
         public static string AddNewArticle {
             get {
                 return ResourceManager.GetString("AddNewArticle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add to the Administrators.
+        /// </summary>
+        public static string AddToAdmins {
+            get {
+                return ResourceManager.GetString("AddToAdmins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Administrator.
+        /// </summary>
+        public static string AdminRole {
+            get {
+                return ResourceManager.GetString("AdminRole", resourceCulture);
             }
         }
         
@@ -169,6 +205,15 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -196,11 +241,29 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Article.
         /// </summary>
         public static string EditArticle {
             get {
                 return ResourceManager.GetString("EditArticle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit User Info.
+        /// </summary>
+        public static string EditUserInfo {
+            get {
+                return ResourceManager.GetString("EditUserInfo", resourceCulture);
             }
         }
         
@@ -228,6 +291,15 @@ namespace CreativeFactory.Resources {
         public static string EmailIsTooLong {
             get {
                 return ResourceManager.GetString("EmailIsTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exclude from the Administrators.
+        /// </summary>
+        public static string ExcludeFromAdmins {
+            get {
+                return ResourceManager.GetString("ExcludeFromAdmins", resourceCulture);
             }
         }
         
@@ -394,6 +466,24 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset Password.
+        /// </summary>
+        public static string PasswordReset {
+            get {
+                return ResourceManager.GetString("PasswordReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset Password.
+        /// </summary>
+        public static string PasswordResetMsg {
+            get {
+                return ResourceManager.GetString("PasswordResetMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registration Completed.
         /// </summary>
         public static string RegCompleted {
@@ -480,6 +570,60 @@ namespace CreativeFactory.Resources {
         public static string RememberMe {
             get {
                 return ResourceManager.GetString("RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password Reset Failure.
+        /// </summary>
+        public static string ResetFailure {
+            get {
+                return ResourceManager.GetString("ResetFailure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was a problem resetting your password. Please try again..
+        /// </summary>
+        public static string ResetFailureMsg {
+            get {
+                return ResourceManager.GetString("ResetFailureMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To reset your password click on this link.
+        /// </summary>
+        public static string ResetMsg {
+            get {
+                return ResourceManager.GetString("ResetMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password Reset Success.
+        /// </summary>
+        public static string ResetSuccess {
+            get {
+                return ResourceManager.GetString("ResetSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password has been reset. Please login using the new password..
+        /// </summary>
+        public static string ResetSuccessMsg {
+            get {
+                return ResourceManager.GetString("ResetSuccessMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        public static string Role {
+            get {
+                return ResourceManager.GetString("Role", resourceCulture);
             }
         }
         
@@ -579,6 +723,24 @@ namespace CreativeFactory.Resources {
         public static string UsernameIsTooLong {
             get {
                 return ResourceManager.GetString("UsernameIsTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        public static string UserRole {
+            get {
+                return ResourceManager.GetString("UserRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users.
+        /// </summary>
+        public static string Users {
+            get {
+                return ResourceManager.GetString("Users", resourceCulture);
             }
         }
     }

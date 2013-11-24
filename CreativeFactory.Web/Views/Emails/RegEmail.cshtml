@@ -8,4 +8,4 @@ Subject: @Resources.RegFinishTitle
 
 @Resources.Accost@ViewBag.UserName.
 
-@Resources.RegFinish http://localhost:4077/en-US/Account/RegisterConfirmation/@ViewBag.ConfirmationToken
+@Resources.RegFinish http://localhost:4077/@Html.Raw(Url.Action("RegisterConfirmation", "Account", new { id = ViewBag.ConfirmationToken }))

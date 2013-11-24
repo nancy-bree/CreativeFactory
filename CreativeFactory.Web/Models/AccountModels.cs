@@ -67,4 +67,20 @@ namespace CreativeFactory.Web.Models
         [Compare("Password", ErrorMessageResourceName = "PasswordDontMatch", ErrorMessageResourceType = typeof (Resources.Resources))]
         public string ConfirmPassword { get; set; }
     }
+
+    public class ResetPasswordConfirmModel
+    {
+        public string Token { get; set; }
+
+        [Required(ErrorMessageResourceName = "NewPasswordFieldCannotBeEmpty", ErrorMessageResourceType = typeof(Resources.Resources))]
+        [StringLength(100, ErrorMessageResourceName = "PasswordIsTooShort", ErrorMessageResourceType = typeof(Resources.Resources), MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "NewPassword", ResourceType = typeof(Resources.Resources))]
+        public string NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "ConfirmPassword", ResourceType = typeof(Resources.Resources))]
+        [Compare("NewPassword", ErrorMessageResourceName = "PasswordDontMatch", ErrorMessageResourceType = typeof(Resources.Resources))]
+        public string ConfirmPassword { get; set; }
+    }
 }
