@@ -1,8 +1,7 @@
 ﻿$(function () {
     $(".deleteBtn").click(function (e) {
         e.preventDefault();
-        pid = $(this).parent().parent().attr("id");
-        username = $(this).parent().parent().data("username");
+        pid = $(this).parent().parent().parent().attr("id");
         $('#dialog-confirm').dialog('open');
     });
     $("#dialog-confirm").dialog({
@@ -19,8 +18,8 @@
         autoOpen: false,
         buttons: {
             "OK": function () {
-                deleteRecord(username);
-                $("td#" + pid).parent().fadeOut("slow").remove();
+                deleteRecord(pid);
+                $("div#" + pid).fadeOut("slow").remove();
                 $(this).dialog("close");
             },
             Cancel: function () {
@@ -33,7 +32,7 @@
         $.ajax({
             type: "POST",
             url: $(".deleteBtn").attr("href"),
-            data: { username: username }
+            data: { id: pid }
         });
     };
 });

@@ -12,12 +12,12 @@ namespace CreativeFactory.Web.Controllers
     {
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
-            string cultureName = RouteData.Values["culture"] as string;
+            var cultureName = RouteData.Values["culture"] as string;
 
             // Attempt to read the culture cookie from Request
             if (cultureName == "")
                 //cultureName = Request.UserLanguages != null && Request.UserLanguages.Length > 0 ? Request.UserLanguages[0] : null; // obtain it from HTTP header AcceptLanguages
-                cultureName = Request.Cookies["_culture"] != null ? Request.Cookies["_culture"].Value : "en-US";
+                cultureName = Request.Cookies["_culture"] != null ? Request.Cookies["_culture"].Value : "en";
 
             // Validate culture name
             cultureName = CultureHelper.GetImplementedCulture(cultureName); // This is safe

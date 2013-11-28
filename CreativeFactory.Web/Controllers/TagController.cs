@@ -8,11 +8,11 @@ namespace CreativeFactory.Web.Controllers
     [HandleError]
     public class TagController : BaseController
     {
-        private IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TagController(IUnitOfWork _unitOfWork)
+        public TagController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = _unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         //
@@ -20,8 +20,8 @@ namespace CreativeFactory.Web.Controllers
 
         public ActionResult Index(int id = 1, int page = 1)
         {
-            ViewBag.Tag = unitOfWork.TagRepository.GetByID(id);
-            return View(unitOfWork.ArticleRepository.Get().Where(x => x.Tags.Any(y => y.Id == id)).ToPagedList(page, 30));
+            ViewBag.Tag = _unitOfWork.TagRepository.GetByID(id);
+            return View(_unitOfWork.ArticleRepository.Get().Where(x => x.Tags.Any(y => y.Id == id)).ToPagedList(page, 30));
         }
 
         //
@@ -29,7 +29,7 @@ namespace CreativeFactory.Web.Controllers
 
         public JsonResult GetTags(string term)
         {
-            var tags = unitOfWork.TagRepository.Get().Where(x => x.Name.ToUpper().Contains(term.ToUpper())).Select(x => x.Name).ToArray();
+            var tags = _unitOfWork.TagRepository.Get().Where(x => x.Name.ToUpper().Contains(term.ToUpper())).Select(x => x.Name).ToArray();
             return Json(tags, JsonRequestBehavior.AllowGet);
         }
 

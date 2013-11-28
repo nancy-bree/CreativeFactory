@@ -1,24 +1,26 @@
-﻿@model CreativeFactory.Entities.Item
+﻿@model CreativeFactory.Web.Models.ItemViewModel
 
 @{
-    ViewBag.Title = Resources.AddItemNav;
+    ViewBag.Title = Resources.EditItem;
 }
+
 <link rel="stylesheet" type="text/css" href="/Scripts/mdd_styles.css" />
 <script type="text/javascript" src="/Scripts/MarkdownDeepLib.min.js"></script>
-<script type="text/javascript" src="/Scripts/autosave.js"></script>
+<script type="text/javascript" src="/Scripts/to-markdown.js"></script>
+
 
 <div class="page-header center">
-    <h1>@ViewBag.Title</h1>
+  <h1>@ViewBag.Title</h1>
 </div>
-<p id="message" class="label label-success"></p>
-@using (Html.BeginForm("Add", "Item", FormMethod.Post, new { role = "form", id = "form-to-save", enctype = "multipart/form-data" }))
+
+@using (Html.BeginForm("Edit", "Item", FormMethod.Post, new { role = "form", enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
     @Html.AntiForgeryToken()
-    
-    @*<input id="ArticleId" value="@ViewBag.ArticleId" style="display:none;" />*@
-    @Html.HiddenFor(m => m.ArticleId)
 
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.ArticleId)
+    
     <div class="form-group">
         @Html.LabelFor(m => m.Title)
         @Html.TextBoxFor(m => m.Title, new { @class = "form-control"})
@@ -38,7 +40,7 @@
         </div>
     </div>
     
-    <input type="submit" value="@Resources.AddItemNav" class="btn btn-primary" /> 
+    <input type="submit" value="@Resources.EditItem" class="btn btn-primary" /> 
 }
 
 <script>
@@ -52,18 +54,13 @@
 
 <script>
     $(function () {
-        $('#Body').autosave({
-            delay: 10000,
-            url: '@Url.Action("SaveDraft", "Item")' + '/',
-            afterSave: function () {
-                $("#message").html("Data updated successfully").show();//...show a message...
-                setTimeout('fadeMessage()', 3000);
-            }
+        var $input = $('.mdd_editor');
+        function updateOutput() {
+            $('.mdd_editor').text(toMarkdown($input.val()));
+        }
+        updateOutput();
+        $input.keyup(function () {
+            updateOutput();
         });
     });
-
-    function fadeMessage() {
-        $('#message').fadeOut('slow');
-    }
 </script>
-

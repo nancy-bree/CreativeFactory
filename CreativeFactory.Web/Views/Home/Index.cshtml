@@ -1,5 +1,17 @@
-﻿@{
-    ViewBag.Title = Resources.Register;
+﻿@model CreativeFactory.Web.Models.MainPageViewModel
+@{
+    ViewBag.Title = "Welcome to CreativeFactory!";
 }
 
-<h3>@Resources.Register</h3>
+<div class="col-md-8">
+    @Html.Partial("~/Views/Shared/_PopularArticles.cshtml", Model.PopularArticles)
+</div>
+<div id="tags" class="col-md-4">
+    @{
+        Html.RenderPartial("~/Views/Shared/_TagCloud.cshtml", Model.TagCloud);
+        Html.RenderPartial("~/Views/Shared/_ActivityDiagram.cshtml");
+    }
+</div>
+
+
+

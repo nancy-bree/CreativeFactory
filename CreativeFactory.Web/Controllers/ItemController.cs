@@ -1,5 +1,6 @@
 ﻿using CreativeFactory.DAL;
 using CreativeFactory.Entities;
+using CreativeFactory.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,11 +13,11 @@ namespace CreativeFactory.Web.Controllers
 {
     public class ItemController : BaseController
     {
-        private IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ItemController(IUnitOfWork _unitOfWork)
+        public ItemController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = _unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         //
@@ -30,6 +31,7 @@ namespace CreativeFactory.Web.Controllers
         //
         // GET: /Item/Add
 
+        [Authorize]
         public ActionResult Add(int articleId)
         {
             ViewBag.ArticleId = articleId;
@@ -53,7 +55,55 @@ namespace CreativeFactory.Web.Controllers
             }
             catch (DataException)
             {
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                ModelState.AddModelError("", Resources.Resources.UnableToSaveChanges);
+            }
+            return View(model);
+        }
+
+        //
+        // GET: /Article/Edit
+
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+            var item = _unitOfWork.ItemRepository.GetByID(id);
+            if (item.Article.UserId != WebSecurity.CurrentUserId) return RedirectToAction("Http403", "Error");
+            var model = new ItemViewModel
+            {
+                Id = item.Id,
+                Title = item.Title,
+                Body = item.Body,
+                ArticleId = item.ArticleId,
+            };
+            return View(model);
+        }
+
+        //
+       //POST: /Article/Edit
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ItemViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var article = _unitOfWork.ArticleRepository.GetByID(model.ArticleId);
+                    var itemToUpdate = _unitOfWork.ItemRepository.GetByID(model.Id);
+                    itemToUpdate.Article = article;
+                    itemToUpdate.Title = model.Title;
+                    var md = new MarkdownDeep.Markdown { ExtraMode = true };
+                    var html = md.Transform(model.Body);
+                    itemToUpdate.Body = html;
+                    _unitOfWork.ItemRepository.Update(itemToUpdate);
+                    _unitOfWork.Save();
+                    return RedirectToAction("Details", "Item", new { id = model.Id });
+                }
+            }
+            catch (DataException)
+            {
+                ModelState.AddModelError("", Resources.Resources.UnableToSaveChanges);
             }
             return View(model);
         }
@@ -63,19 +113,30 @@ namespace CreativeFactory.Web.Controllers
 
         public ActionResult Details(int id = 1)
         {
-            var item = unitOfWork.ItemRepository.GetByID(id);
+            var item = _unitOfWork.ItemRepository.GetByID(id);
             return View(item);
         }
 
         //
         // POST: /Item/Delete
 
+        [Authorize]
         [HttpPost]
         public JsonResult Delete(int id)
         {
-            unitOfWork.ItemRepository.Delete(id);
-            unitOfWork.Save();
+            _unitOfWork.ItemRepository.Delete(id);
+            _unitOfWork.Save();
             return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public JsonResult GetStats()
+        {
+            var time = DateTime.Now;
+            var dict = _unitOfWork.ItemRepository.GetItemsStatistics(time.Month, time.Year);
+            var dates = dict.Keys.ToArray();
+            var count = dict.Values.ToArray();
+            return Json(new { count = count, dates = dates }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SaveDraft(FormCollection form)
@@ -88,8 +149,7 @@ namespace CreativeFactory.Web.Controllers
 
         private void AddItem(Item model)
         {
-            var md = new MarkdownDeep.Markdown();
-            md.ExtraMode = true;
+            var md = new MarkdownDeep.Markdown {ExtraMode = true};
             var html = md.Transform(model.Body);
             var item = new Item
             {
@@ -98,15 +158,15 @@ namespace CreativeFactory.Web.Controllers
                 ArticleId = model.ArticleId,
                 Order = GetItemOrder(model.ArticleId)
             };
-            unitOfWork.ItemRepository.Insert(item);
-            unitOfWork.Save();
+            _unitOfWork.ItemRepository.Insert(item);
+            _unitOfWork.Save();
         }
 
         private int GetItemOrder(int articleId)
         {
-            var article = unitOfWork.ArticleRepository.GetByID(articleId);
+            var article = _unitOfWork.ArticleRepository.GetByID(articleId);
             if (article.Items.Count == 0) return 1;
-            else return article.Items.OrderBy(x => x.Order).Last().Order + 1;
+            return article.Items.OrderBy(x => x.Order).Last().Order + 1;
         }
 
         public JsonResult GetNewItemsOrder(string order)
@@ -115,12 +175,12 @@ namespace CreativeFactory.Web.Controllers
             int i = 1;
             foreach (var id in idList)
             {
-                var item = unitOfWork.ItemRepository.GetByID(id);
+                var item = _unitOfWork.ItemRepository.GetByID(id);
                 item.Order = i;
-                unitOfWork.ItemRepository.Update(item);
+                _unitOfWork.ItemRepository.Update(item);
                 i++;
             }
-            unitOfWork.Save();
+            _unitOfWork.Save();
             return Json(new { success = true });
         }
     }

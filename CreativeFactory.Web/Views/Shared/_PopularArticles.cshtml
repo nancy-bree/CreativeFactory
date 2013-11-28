@@ -1,0 +1,13 @@
+﻿@model PagedList.IPagedList<CreativeFactory.Entities.Article>
+@using PagedList.Mvc
+
+<div class="page-header center">
+    <h1>@Resources.PopularArticles</h1>
+</div>
+@foreach (var item in Model)
+{
+    Html.RenderPartial("~/Views/Shared/_ArticlesList.cshtml", item);
+}
+@Html.PagedListPager(Model, 
+                    page => Url.Action("Index", "Home", new RouteValueDictionary {{"page", page }})
+                    , PagedListRenderOptions.PageNumbersOnly)

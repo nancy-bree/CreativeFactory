@@ -121,13 +121,13 @@
     <value>Здравствуйте, </value>
   </data>
   <data name="AddArticleNav" xml:space="preserve">
-    <value>Добавить текст</value>
+    <value>Добавить креатив</value>
   </data>
   <data name="AddItemNav" xml:space="preserve">
     <value>Добавить главу</value>
   </data>
   <data name="ArticlesNav" xml:space="preserve">
-    <value>Тексты</value>
+    <value>Креативы</value>
   </data>
   <data name="BodyFieldCannotBeEmpty" xml:space="preserve">
     <value>Текст главы не может быть пустым.</value>
@@ -181,7 +181,7 @@
     <value>Выход</value>
   </data>
   <data name="MyArticles" xml:space="preserve">
-    <value>Мои тексты</value>
+    <value>Мои креативы</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Название</value>
@@ -262,10 +262,10 @@
     <value>Управление аккаунтом</value>
   </data>
   <data name="AddNewArticle" xml:space="preserve">
-    <value>Создать новый текст</value>
+    <value>Создать новый креатив</value>
   </data>
   <data name="EditArticle" xml:space="preserve">
-    <value>Редактировать текст</value>
+    <value>Редактировать креатив</value>
   </data>
   <data name="ItemsCount" xml:space="preserve">
     <value>гл.</value>
@@ -277,13 +277,13 @@
     <value>Главы:</value>
   </data>
   <data name="NoArticlesFound" xml:space="preserve">
-    <value>Тексты не найдены.</value>
+    <value>Креативы не найдены.</value>
   </data>
   <data name="TaggedArticles" xml:space="preserve">
-    <value>Тексты с меткой</value>
+    <value>Креативы с меткой</value>
   </data>
   <data name="Tags" xml:space="preserve">
-    <value>Метки:</value>
+    <value>Метки</value>
   </data>
   <data name="TagsNone" xml:space="preserve">
     <value>нет меток</value>
@@ -344,5 +344,38 @@
   </data>
   <data name="Users" xml:space="preserve">
     <value>Пользователи</value>
+  </data>
+  <data name="LoginPassIncorrect" xml:space="preserve">
+    <value>Неправильные имя пользователя или пароль.</value>
+  </data>
+  <data name="PasswordInvalid" xml:space="preserve">
+    <value>Неправильные текущий или новый пароль.</value>
+  </data>
+  <data name="UnableToSaveChanges" xml:space="preserve">
+    <value>Не удалось сохранить изменения. Пожалуйста, повторите попытку.</value>
+  </data>
+  <data name="ActivityDiagram" xml:space="preserve">
+    <value>Диаграмма активности</value>
+  </data>
+  <data name="EditItem" xml:space="preserve">
+    <value>Редактировать главу</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="DeleteThis" xml:space="preserve">
+    <value>Удалить?</value>
+  </data>
+  <data name="PasswordHasBeenReset" xml:space="preserve">
+    <value>Пароль был сброшен.</value>
+  </data>
+  <data name="PopularArticles" xml:space="preserve">
+    <value>Популярные креативы</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Предпросмотр</value>
   </data>
 </root>

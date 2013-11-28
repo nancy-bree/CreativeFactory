@@ -88,7 +88,16 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Article.
+        ///   Looks up a localized string similar to Activity Diagram.
+        /// </summary>
+        public static string ActivityDiagram {
+            get {
+                return ResourceManager.GetString("ActivityDiagram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Creative.
         /// </summary>
         public static string AddArticleNav {
             get {
@@ -106,7 +115,7 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new article.
+        ///   Looks up a localized string similar to Add a new creative.
         /// </summary>
         public static string AddNewArticle {
             get {
@@ -133,7 +142,7 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Articles.
+        ///   Looks up a localized string similar to Creatives.
         /// </summary>
         public static string ArticlesNav {
             get {
@@ -214,6 +223,15 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete this?.
+        /// </summary>
+        public static string DeleteThis {
+            get {
+                return ResourceManager.GetString("DeleteThis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -250,11 +268,20 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Article.
+        ///   Looks up a localized string similar to Edit Creative.
         /// </summary>
         public static string EditArticle {
             get {
                 return ResourceManager.GetString("EditArticle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Item.
+        /// </summary>
+        public static string EditItem {
+            get {
+                return ResourceManager.GetString("EditItem", resourceCulture);
             }
         }
         
@@ -331,6 +358,15 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Light.
         /// </summary>
         public static string Light {
@@ -358,6 +394,15 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The user name or password provided is incorrect..
+        /// </summary>
+        public static string LoginPassIncorrect {
+            get {
+                return ResourceManager.GetString("LoginPassIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log off.
         /// </summary>
         public static string Logoff {
@@ -376,7 +421,7 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to My Articles.
+        ///   Looks up a localized string similar to My Creatives.
         /// </summary>
         public static string MyArticles {
             get {
@@ -457,6 +502,24 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password has been reset..
+        /// </summary>
+        public static string PasswordHasBeenReset {
+            get {
+                return ResourceManager.GetString("PasswordHasBeenReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current password is incorrect or the new password is invalid..
+        /// </summary>
+        public static string PasswordInvalid {
+            get {
+                return ResourceManager.GetString("PasswordInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password is too short..
         /// </summary>
         public static string PasswordIsTooShort {
@@ -480,6 +543,24 @@ namespace CreativeFactory.Resources {
         public static string PasswordResetMsg {
             get {
                 return ResourceManager.GetString("PasswordResetMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Popular Articles.
+        /// </summary>
+        public static string PopularArticles {
+            get {
+                return ResourceManager.GetString("PopularArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string Preview {
+            get {
+                return ResourceManager.GetString("Preview", resourceCulture);
             }
         }
         
@@ -628,7 +709,7 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Articles tagged.
+        ///   Looks up a localized string similar to Creatives tagged.
         /// </summary>
         public static string TaggedArticles {
             get {
@@ -655,7 +736,7 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tags:.
+        ///   Looks up a localized string similar to Tags.
         /// </summary>
         public static string Tags {
             get {
@@ -669,6 +750,15 @@ namespace CreativeFactory.Resources {
         public static string TagsNone {
             get {
                 return ResourceManager.GetString("TagsNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string Theme {
+            get {
+                return ResourceManager.GetString("Theme", resourceCulture);
             }
         }
         
@@ -687,6 +777,15 @@ namespace CreativeFactory.Resources {
         public static string TitleIsTooLong {
             get {
                 return ResourceManager.GetString("TitleIsTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to save changes. Try again, and if the problem persists, see your system administrator..
+        /// </summary>
+        public static string UnableToSaveChanges {
+            get {
+                return ResourceManager.GetString("UnableToSaveChanges", resourceCulture);
             }
         }
         

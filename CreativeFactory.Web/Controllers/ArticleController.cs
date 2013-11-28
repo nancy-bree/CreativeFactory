@@ -13,14 +13,13 @@ using WebMatrix.WebData;
 namespace CreativeFactory.Web.Controllers
 {
     [HandleError]
-    [Authorize]
     public class ArticleController : BaseController
     {
-        private IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ArticleController(IUnitOfWork _unitOfWork)
+        public ArticleController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = _unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         //
@@ -34,6 +33,7 @@ namespace CreativeFactory.Web.Controllers
         //
         // GET: /Article/Add
 
+        [Authorize]
         public ActionResult Add()
         {
             return View();
@@ -50,12 +50,12 @@ namespace CreativeFactory.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     AddArticle(model);
-                    return RedirectToAction("Index", "Home"/*, new { id = WebSecurity.CurrentUserId }*/);
+                    return RedirectToAction("MyArticles", "Home", new { userId = WebSecurity.CurrentUserId });
                 }
             }
             catch (DataException)
             {
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                ModelState.AddModelError("", Resources.Resources.UnableToSaveChanges);
             }
             return View(model);
         }
@@ -63,9 +63,10 @@ namespace CreativeFactory.Web.Controllers
         //
         // GET: /Article/Edit
 
+        [Authorize]
         public ActionResult Edit(int id)
         {
-            var article = unitOfWork.ArticleRepository.GetByID(id);
+            var article = _unitOfWork.ArticleRepository.GetByID(id);
             if (article.UserId != WebSecurity.CurrentUserId) return RedirectToAction("Http403", "Error");
             var model = new ArticleViewModel
             {
@@ -89,8 +90,8 @@ namespace CreativeFactory.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = unitOfWork.UserRepository.GetByID(WebSecurity.CurrentUserId);
-                    var articleToUpdate = unitOfWork.ArticleRepository.GetByID(model.Id);
+                    var user = _unitOfWork.UserRepository.GetByID(WebSecurity.CurrentUserId);
+                    var articleToUpdate = _unitOfWork.ArticleRepository.GetByID(model.Id);
                     articleToUpdate.Description = model.Description;
                     articleToUpdate.User = user;
                     if ((model.Tags != null) && !String.IsNullOrWhiteSpace(model.Tags))
@@ -99,18 +100,30 @@ namespace CreativeFactory.Web.Controllers
                     }
                     else
                     {
-                        unitOfWork.ArticleRepository.DeleteArticleTag(articleToUpdate.Id);
+                        _unitOfWork.ArticleRepository.DeleteArticleTag(articleToUpdate.Id);
                     }
-                    unitOfWork.ArticleRepository.Update(articleToUpdate);
-                    unitOfWork.Save();
-                    return RedirectToAction("Details", "Article", new { id = model.Id });
+                    _unitOfWork.ArticleRepository.Update(articleToUpdate);
+                    _unitOfWork.Save();
+                    return RedirectToAction("MyArticles", "Home", new { userId = WebSecurity.CurrentUserId });
                 }
             }
             catch (DataException)
             {
-                ModelState.AddModelError("", "Unable to edit article. Try again, and if the problem persists, see your system administrator.");
+                ModelState.AddModelError("", Resources.Resources.UnableToSaveChanges);
             }
             return View(model);
+        }
+
+        //
+        // POST: /Article/Delete
+
+        [Authorize]
+        [HttpPost]
+        public JsonResult Delete(int id)
+        {
+            _unitOfWork.ArticleRepository.Delete(id);
+            _unitOfWork.Save();
+            return Json(new { success = true });
         }
 
         //
@@ -118,8 +131,9 @@ namespace CreativeFactory.Web.Controllers
 
         public ActionResult Details(int id = 1, int page = 1)
         {
-            var article = unitOfWork.ArticleRepository.GetByID(id);
+            var article = _unitOfWork.ArticleRepository.GetByID(id);
             ViewBag.ArticleId = article.Id;
+            ViewBag.UserId = article.UserId;
             var model = new ArticleDetailsViewModel(article.Title, article.Description, article.CreatedDate, article.Tags, article.Items, page);
             return View(model);
         }
@@ -136,8 +150,8 @@ namespace CreativeFactory.Web.Controllers
             {
                 SetTags(model.Tags, article);
             }
-            unitOfWork.ArticleRepository.Insert(article);
-            unitOfWork.Save();
+            _unitOfWork.ArticleRepository.Insert(article);
+            _unitOfWork.Save();
         }
 
         private void SetTags(string p, Article article)
@@ -153,15 +167,15 @@ namespace CreativeFactory.Web.Controllers
             }
             foreach (var tag in tags)
             {
-                var tmp = unitOfWork.TagRepository.GetTagByName(tag.Trim());
+                var tmp = _unitOfWork.TagRepository.GetTagByName(tag.Trim());
                 if (tmp == null)
                 {
                     tmp = new Tag
                     {
                         Name = tag.Trim()
                     };
-                    unitOfWork.TagRepository.Insert(tmp);
-                    unitOfWork.Save();
+                    _unitOfWork.TagRepository.Insert(tmp);
+                    _unitOfWork.Save();
                 }
                 article.Tags.Add(tmp);
             }

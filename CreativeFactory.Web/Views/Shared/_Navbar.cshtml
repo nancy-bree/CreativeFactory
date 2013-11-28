@@ -19,36 +19,66 @@
                       {
                           <li>@Html.ActionLink(Resources.UserManager, "Users", "Admin")</li>
                       }
+                      <li><a href="@Url.Action("Index", "Search")"><span class="glyphicon glyphicon-search" style="font-size:12pt;"></span></a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                      <li>@Html.ActionLink("EN", "SetCulture", "Home", new { culture = "en-US" }, null)</li>
-                      <li>@Html.ActionLink("RU", "SetCulture", "Home", new { culture = "ru" }, null)</li>
-                      <li><a href="#" rel="~/Content/bootstrap.light.css" class="theme">@Resources.Light</a></li>
-                      <li><a href="#" rel="~/Content/bootstrap.dark.css" class="theme">@Resources.Dark</a></li>
+                      <li class="dropdown">
+                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                              @Resources.Language<b class="caret"></b>
+                          </a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby = "drop1">
+                              <li>@Html.ActionLink("EN", "SetCulture", "Home", new { returnUrl = Request.RawUrl, culture = "en" }, null)</li>
+                              <li>@Html.ActionLink("RU", "SetCulture", "Home", new { returnUrl = Request.RawUrl, culture = "ru" }, null)</li>
+                          </ul>
+                      </li>
+                      <li class="dropdown">
+                          <a id="drop2" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                              @Resources.Theme<b class="caret"></b>
+                          </a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby = "drop2">
+                              <li><a href="#" rel="~/Content/bootstrap.light.css" class="theme">@Resources.Light</a></li>
+                                <li><a href="#" rel="~/Content/bootstrap.dark.css" class="theme">@Resources.Dark</a></li>
+                          </ul>
+                      </li>
                       <li>
-                        <a href="@Url.Action("MyArticles", "Home", new { userId = WebSecurity.CurrentUserId}, null)">
-                            <span class="glyphicon glyphicon-user" style="font-size:12pt;"></span>
-                            &nbsp;@User.Identity.Name
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("LogOff", "Account")">
-                            <span class="glyphicon glyphicon-log-out" style="font-size:12pt;"></span>
-                            &nbsp;@Resources.Logoff
-                        </a>
-                    </li>
-                </ul>
+                          <a href="@Url.Action("MyArticles", "Home", new { userId = WebSecurity.CurrentUserId}, null)">
+                              <span class="glyphicon glyphicon-user" style="font-size:12pt;"></span>
+                              &nbsp;@User.Identity.Name
+                          </a>
+                      </li>
+                      <li>
+                          <a href="@Url.Action("LogOff", "Account")">
+                              <span class="glyphicon glyphicon-log-out" style="font-size:12pt;"></span>
+                              &nbsp;@Resources.Logoff
+                          </a>
+                      </li>
+                  </ul>
               } 
               else 
               {
                   <ul class="nav navbar-nav">
                       <li>@Html.ActionLink(Resources.ArticlesNav, "", "Home")</li>
+                      <li><a href="#"><span class="glyphicon glyphicon-search" style="font-size:12pt;"></span></a></li>
                   </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("EN", "SetCulture", "Home", new { culture = "en-US" }, null)</li>
-                    <li>@Html.ActionLink("RU", "SetCulture", "Home", new { culture = "ru" }, null)</li>
-                    <li><a href="#" rel="~/Content/bootstrap.light.css" class="theme">@Resources.Light</a></li>
-                    <li><a href="#" rel="~/Content/bootstrap.dark.css" class="theme">@Resources.Dark</a></li>
+                    <li class="dropdown">
+                          <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                              @Resources.Language<b class="caret"></b>
+                          </a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby = "drop1">
+                              <li>@Html.ActionLink("EN", "SetCulture", "Home", new { returnUrl = Request.RawUrl, culture = "en" }, null)</li>
+                              <li>@Html.ActionLink("RU", "SetCulture", "Home", new { returnUrl = Request.RawUrl, culture = "ru" }, null)</li>
+                          </ul>
+                      </li>
+                      <li class="dropdown">
+                          <a id="drop2" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                              @Resources.Theme<b class="caret"></b>
+                          </a>
+                          <ul class="dropdown-menu" role="menu" aria-labelledby = "drop2">
+                              <li><a href="#" rel="~/Content/bootstrap.light.css" class="theme">@Resources.Light</a></li>
+                                <li><a href="#" rel="~/Content/bootstrap.dark.css" class="theme">@Resources.Dark</a></li>
+                          </ul>
+                      </li>
                     <li>
                         <a href="@Url.Action("Register", "Account")">
                             <span class="glyphicon glyphicon-check" style="font-size:12pt;"></span>&nbsp;
@@ -67,6 +97,7 @@
         </div>
 </div>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.cookie.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/dropdown.js")"></script>
 <script>
     if ($.cookie("css")) {
         $("link#site-theme").attr("href", $.cookie("css"));

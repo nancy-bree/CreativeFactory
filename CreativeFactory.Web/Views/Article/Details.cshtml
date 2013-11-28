@@ -15,7 +15,10 @@
     </blockquote>
 }
 
-@Html.ActionLink(@Resources.AddItemNav, "Add", "Item", new { articleId = ViewBag.ArticleId }, new { role = "button", @class = "btn btn-primary"})
+@if (ViewBag.UserId == WebSecurity.CurrentUserId)
+{
+    @Html.ActionLink(@Resources.AddItemNav, "Add", "Item", new {articleId = ViewBag.ArticleId}, new {role = "button", @class = "btn btn-primary"})
+}
 
 @if (Model.Items.Count > 0)
 {

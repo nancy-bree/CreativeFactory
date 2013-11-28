@@ -121,13 +121,13 @@
     <value>Hello, </value>
   </data>
   <data name="AddArticleNav" xml:space="preserve">
-    <value>Add Article</value>
+    <value>Add Creative</value>
   </data>
   <data name="AddItemNav" xml:space="preserve">
     <value>Add Item</value>
   </data>
   <data name="ArticlesNav" xml:space="preserve">
-    <value>Articles</value>
+    <value>Creatives</value>
   </data>
   <data name="BodyFieldCannotBeEmpty" xml:space="preserve">
     <value>Body of item is required.</value>
@@ -181,7 +181,7 @@
     <value>Log off</value>
   </data>
   <data name="MyArticles" xml:space="preserve">
-    <value>My Articles</value>
+    <value>My Creatives</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -262,10 +262,10 @@
     <value>Manage Account</value>
   </data>
   <data name="AddNewArticle" xml:space="preserve">
-    <value>Add a new article</value>
+    <value>Add a new creative</value>
   </data>
   <data name="EditArticle" xml:space="preserve">
-    <value>Edit Article</value>
+    <value>Edit Creative</value>
   </data>
   <data name="ItemsCount" xml:space="preserve">
     <value>items</value>
@@ -280,10 +280,10 @@
     <value>No articles found.</value>
   </data>
   <data name="TaggedArticles" xml:space="preserve">
-    <value>Articles tagged</value>
+    <value>Creatives tagged</value>
   </data>
   <data name="Tags" xml:space="preserve">
-    <value>Tags:</value>
+    <value>Tags</value>
   </data>
   <data name="TagsNone" xml:space="preserve">
     <value>none</value>
@@ -344,5 +344,38 @@
   </data>
   <data name="Users" xml:space="preserve">
     <value>Users</value>
+  </data>
+  <data name="UnableToSaveChanges" xml:space="preserve">
+    <value>Unable to save changes. Try again, and if the problem persists, see your system administrator.</value>
+  </data>
+  <data name="LoginPassIncorrect" xml:space="preserve">
+    <value>The user name or password provided is incorrect.</value>
+  </data>
+  <data name="PasswordInvalid" xml:space="preserve">
+    <value>The current password is incorrect or the new password is invalid.</value>
+  </data>
+  <data name="ActivityDiagram" xml:space="preserve">
+    <value>Activity Diagram</value>
+  </data>
+  <data name="EditItem" xml:space="preserve">
+    <value>Edit Item</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="DeleteThis" xml:space="preserve">
+    <value>Delete this?</value>
+  </data>
+  <data name="PasswordHasBeenReset" xml:space="preserve">
+    <value>Password has been reset.</value>
+  </data>
+  <data name="PopularArticles" xml:space="preserve">
+    <value>Popular Articles</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Preview</value>
   </data>
 </root>

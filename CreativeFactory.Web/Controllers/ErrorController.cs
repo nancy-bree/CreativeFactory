@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace PhotoBook.Controllers
+namespace CreativeFactory.Web.Controllers
 {
     public class ErrorController : Controller
     {

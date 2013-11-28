@@ -1,7 +1,7 @@
 ﻿@model CreativeFactory.Entities.Article
 
-<div class="row">
-    <div class="thumbnail col-md-6">
+<div class="row" id="@Model.Id">
+    <div class="thumbnail">
         <h4>@Html.ActionLink(Model.Title, "Details", "Article", new { id = Model.Id}, null)</h4>
         <h5>@Resources.Author @Model.User.UserName</h5>
         @if (!String.IsNullOrWhiteSpace(Model.Description))
@@ -9,15 +9,26 @@
             <p>@Resources.Description: @Model.Description</p>
         }
         <p>@Resources.Items @Model.Items.Count</p>
-        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;@Resources.Tags 
+        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
         @if (Model.Tags.Count == 0)
         {
             <small>@Resources.TagsNone</small>
         }
         else
         {
-            <small>@Html.Raw(String.Join(", ", Model.Tags.Select(tag => @Html.ActionLink(tag.Name, "Index", "Tag", new { id = tag.Id}, null).ToHtmlString()).ToArray()))</small>
+            <small>@Html.Raw(String.Join(", ", Model.Tags.Select(tag => Html.ActionLink(tag.Name, "Index", "Tag", new { id = tag.Id}, null).ToHtmlString()).ToArray()))</small>
+        }
+        @if (User.Identity.IsAuthenticated && (Model.UserId == WebSecurity.CurrentUserId))
+        {
+            <div>
+                @Html.ActionLink(Resources.Edit, "Edit", "Article", new {id = Model.Id}, new {@class = "btn btn-xs btn-primary", role = "button"})
+                @Html.ActionLink(Resources.Delete, "Delete", "Article", null, new {@class = "deleteBtn btn btn-xs btn-primary", role = "button"})
+            </div>
         }
     </div>
 </div>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.min.js")"></script>
+<script src="@Url.Content("~/Scripts/coffee/delete-record.js")"></script>
+
+<div id="dialog-confirm">@Resources.DeleteThis</div>
 

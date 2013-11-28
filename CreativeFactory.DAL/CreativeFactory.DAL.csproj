@@ -70,6 +70,14 @@
     <Compile Include="Migrations\201311231949175_NewCreatedDateColumnForItemTable.Designer.cs">
       <DependentUpon>201311231949175_NewCreatedDateColumnForItemTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201311250826157_ChangeRatingTable.cs" />
+    <Compile Include="Migrations\201311250826157_ChangeRatingTable.Designer.cs">
+      <DependentUpon>201311250826157_ChangeRatingTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201311250838569_ChangeRatingTable2.cs" />
+    <Compile Include="Migrations\201311250838569_ChangeRatingTable2.Designer.cs">
+      <DependentUpon>201311250838569_ChangeRatingTable2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RatingRepository.cs" />
@@ -103,6 +111,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201311231949175_NewCreatedDateColumnForItemTable.resx">
       <DependentUpon>201311231949175_NewCreatedDateColumnForItemTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201311250826157_ChangeRatingTable.resx">
+      <DependentUpon>201311250826157_ChangeRatingTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201311250838569_ChangeRatingTable2.resx">
+      <DependentUpon>201311250838569_ChangeRatingTable2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

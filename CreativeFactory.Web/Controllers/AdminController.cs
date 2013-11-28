@@ -16,11 +16,11 @@ namespace CreativeFactory.Web.Controllers
     [Authorize(Roles = "Administrator")]
     public class AdminController : BaseController
     {
-        private IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AdminController(IUnitOfWork _unitOfWork)
+        public AdminController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = _unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         //
@@ -28,7 +28,7 @@ namespace CreativeFactory.Web.Controllers
 
         public ActionResult Users(int page = 1)
         {
-            return View(unitOfWork.UserRepository.Get(orderBy: x => x.OrderBy(y => y.UserName)).ToPagedList(page, Settings.Default.ArticlesPerPage));
+            return View(_unitOfWork.UserRepository.Get(x => x.OrderBy(y => y.UserName)).ToPagedList(page, Settings.Default.ArticlesPerPage));
         }
 
         //
@@ -50,7 +50,7 @@ namespace CreativeFactory.Web.Controllers
         [HttpPost]
         public JsonResult ResetUserPassword(string username, string emailAddress)
         {
-            string confirmationToken = WebSecurity.GeneratePasswordResetToken(username);
+            var confirmationToken = WebSecurity.GeneratePasswordResetToken(username);
             dynamic email = new Email("ChngPasswordEmail");
             email.To = emailAddress;
             email.UserName = username;

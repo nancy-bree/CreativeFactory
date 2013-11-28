@@ -17,11 +17,11 @@ namespace CreativeFactory.Web.Controllers
     [HandleError]
     public class AccountController : BaseController
     {
-        private IUnitOfWork unitOfWork;
+        private IUnitOfWork _unitOfWork;
 
-        public AccountController(IUnitOfWork _unitOfWork)
+        public AccountController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = _unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         //
@@ -48,7 +48,7 @@ namespace CreativeFactory.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", Resources.Resources.LoginPassIncorrect);
             return View(model);
         }
 
@@ -165,7 +165,7 @@ namespace CreativeFactory.Web.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation(string Id)
         {
-            ResetPasswordConfirmModel model = new ResetPasswordConfirmModel() { Token = Id };
+            var model = new ResetPasswordConfirmModel { Token = Id };
             return View(model);
         }
 
@@ -232,10 +232,7 @@ namespace CreativeFactory.Web.Controllers
                     {
                         return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
-                    }
+                    ModelState.AddModelError("", Resources.Resources.PasswordInvalid);
                 }
             }
             else
@@ -273,10 +270,7 @@ namespace CreativeFactory.Web.Controllers
             {
                 return Redirect(returnUrl);
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            return RedirectToAction("Index", "Home");
         }
 
         public enum ManageMessageId

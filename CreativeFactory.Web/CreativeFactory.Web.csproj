@@ -194,7 +194,11 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\RatingController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Models\ArticleDetailsViewModel.cs" />
+    <Compile Include="Models\ItemViewModel.cs" />
+    <Compile Include="Models\MainPageViewModel.cs" />
     <Compile Include="Services\MarkdownDeepExtensions.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Global.asax.cs">
@@ -214,6 +218,7 @@
     <Compile Include="Services\TagService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="favicon.ico" />
     <Content Include="Content\bg.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -289,21 +294,26 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
-    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\coffee\change-role.js" />
+    <Content Include="Scripts\coffee\delete-record.js" />
     <Content Include="Scripts\coffee\delete-user.js" />
     <Content Include="Scripts\coffee\reorder.coffee" />
-    <Content Include="Scripts\coffee\delete-record.coffee" />
+    <Content Include="Scripts\coffee\delete-user.coffee" />
     <Content Include="Scripts\coffee\reset-password.coffee" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\autosave.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\dropdown.js" />
     <Content Include="Scripts\g.bar-min.js" />
     <Content Include="Scripts\g.bar.js" />
     <Content Include="Scripts\g.dot-min.js" />
@@ -342,7 +352,11 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\raphael-min.js" />
     <Content Include="Scripts\raphael.js" />
-    <Content Include="Web.config" />
+    <Content Include="Scripts\to-markdown.js" />
+    <Content Include="Scripts\_chart.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -383,6 +397,10 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\PasswordResetFailure.cshtml" />
     <Content Include="Views\Account\PasswordResetSuccess.cshtml" />
+    <Content Include="Views\Shared\_TagCloud.cshtml" />
+    <Content Include="Views\Shared\_ActivityDiagram.cshtml" />
+    <Content Include="Views\Shared\_PopularArticles.cshtml" />
+    <Content Include="Views\Item\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

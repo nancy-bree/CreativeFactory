@@ -24,6 +24,15 @@ namespace CreativeFactory.DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Item>()
+                .HasMany(x => x.Votes)
+                .WithRequired(x => x.Item);
+
+            modelBuilder.Entity<User>()
+                .HasMany(x => x.Votes)
+                .WithRequired(x => x.User)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Article>()
                 .HasMany(x => x.Tags)
                 .WithMany(y => y.Articles)

@@ -27,7 +27,7 @@ namespace CreativeFactory.DAL
         /// <summary>
         /// Gets all article tags.
         /// </summary>
-        /// <param name="photoId">Article Id.</param>
+        /// <param name="articleId">Article Id.</param>
         /// <returns>List of tags.</returns>
         public IEnumerable<Tag> GetArticleTags(int articleId)
         {
@@ -38,7 +38,7 @@ namespace CreativeFactory.DAL
         /// <summary>
         /// Removes all article tags.
         /// </summary>
-        /// <param name="photoId">Article ID.</param>
+        /// <param name="articleId">Article ID.</param>
         public void DeleteArticleTag(int articleId)
         {
             var photo = this.GetByID(articleId);
@@ -48,6 +48,24 @@ namespace CreativeFactory.DAL
             {
                 photo.Tags.Remove(item);
             }
+        }
+
+        public IEnumerable<int> GetPopularArticlesId()
+        {
+            //select Items.ArticleId, count(*) Votes
+            //from Items
+            //inner join Ratings
+            //on items.Id = Ratings.ItemId
+            //group by Items.ArticleId
+            //order by Votes desc
+
+            var query = _context.Database
+                        .SqlQuery<int>("SELECT Items.ArticleId FROM Items " +
+                                       "INNER JOIN Ratings " +
+                                       "ON Items.Id = Ratings.ItemId " +
+                                       "GROUP BY Items.ArticleId " +
+                                       "ORDER BY COUNT(*) DESC");
+            return query.ToList();
         }
     }
 }

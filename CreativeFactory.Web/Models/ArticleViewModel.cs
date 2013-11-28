@@ -18,6 +18,7 @@ namespace CreativeFactory.Web.Models
         [StringLength(256, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "DescriptionIsTooLong")]
         public string Description { get; set; }
 
+        [Display(Name = "Tags", ResourceType = typeof(Resources.Resources))]
         public string Tags { get; set; }
     }
 }

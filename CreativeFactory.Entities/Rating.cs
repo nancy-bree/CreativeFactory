@@ -16,6 +16,10 @@ namespace CreativeFactory.Entities
 
         public int ItemId { get; set; }
 
-        public int Vote { get; set; }
+        //public int Vote { get; set; }
+
+        public User User { get; set; }
+
+        public Item Item { get; set; }
     }
 }

@@ -17,5 +17,7 @@ namespace CreativeFactory.Entities
         public string Email { get; set; }
 
         public virtual ICollection<Article> Articles { get; set; }
+
+        public virtual ICollection<Rating> Votes { get; set; }
     }
 }

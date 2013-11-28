@@ -1,0 +1,15 @@
+﻿@model IEnumerable<CreativeFactory.Entities.Tag>
+
+<div class="page-header center">
+    <h1>@Resources.Tags</h1>
+</div>
+@foreach (var t in Model )
+{
+    int count = 1;
+    if (t.Articles != null) 
+    {
+        count = t.Articles.Count;
+    }
+    @Html.ActionLink(t.Name, "Index", "Tag", new { id = t.Id }, new { @class = CreativeFactory.Web.Services.TagService.GetTagClass(count, ViewBag.TotalArticlesCount)})
+    @:&nbsp;
+}
