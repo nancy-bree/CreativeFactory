@@ -26,7 +26,6 @@ namespace CreativeFactory.Web.Controllers
 
         //
         // GET: /Tag/GetTags
-
         public JsonResult GetTags(string term)
         {
             var tags = _unitOfWork.TagRepository.Get().Where(x => x.Name.ToUpper().Contains(term.ToUpper())).Select(x => x.Name).ToArray();

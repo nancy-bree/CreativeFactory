@@ -5,9 +5,15 @@
 }
 
 <div class="page-header center">
-  <h1>@Model.Title</h1>
+    <h1>@Model.Title
+        @if (ViewBag.UserId == WebSecurity.CurrentUserId)
+        {
+            <small>
+                @Html.ActionLink(@Resources.AddItemNav, "Add", "Item", new {articleId = ViewBag.ArticleId}, new {role = "button", @class = "btn btn-primary btn-xs"})
+            </small>
+        }
+    </h1>
 </div>
-
 @if (!String.IsNullOrEmpty(Model.Description))
 {
     <blockquote>
@@ -15,12 +21,7 @@
     </blockquote>
 }
 
-@if (ViewBag.UserId == WebSecurity.CurrentUserId)
-{
-    @Html.ActionLink(@Resources.AddItemNav, "Add", "Item", new {articleId = ViewBag.ArticleId}, new {role = "button", @class = "btn btn-primary"})
-}
-
-@if (Model.Items.Count > 0)
+@if (Model.Items.Any())
 {
     Html.RenderPartial("~/Views/Shared/_ItemsList.cshtml", Model.Items);
 }

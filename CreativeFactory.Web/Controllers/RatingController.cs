@@ -27,7 +27,7 @@ namespace CreativeFactory.Web.Controllers
         [HttpPost]
         public JsonResult GetItemRating(int itemId)
         {
-            var result = _unitOfWork.RatingRepository.GetOneItemRating(itemId);
+            var result = _unitOfWork.ItemRepository.GetByID(itemId).Votes.Count;
             return Json(new {result = result});
         }
 

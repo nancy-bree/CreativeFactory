@@ -24,13 +24,13 @@ namespace CreativeFactory.Web.Controllers
 
         //
         // GET: /CreativeFactory/
-
+        //[OutputCache(Duration = 6000, VaryByParam = "none")]
         public ActionResult Index(int page = 1)
         {
-            var lol = _unitOfWork.ArticleRepository.GetPopularArticlesId();
+            var popularId = _unitOfWork.ArticleRepository.GetPopularArticlesId();
+            var popularArticles = popularId.Select(id => _unitOfWork.ArticleRepository.GetByID(id)).ToList();
             var tags = _unitOfWork.TagRepository.Get(x => x.OrderBy(y => y.Name));
             ViewBag.TotalArticlesCount = _unitOfWork.ArticleRepository.Get().Count();
-            var popularArticles = _unitOfWork.ArticleRepository.Get();//RatingService.GetPopularPhotosList();
             var model = new MainPageViewModel(tags, popularArticles, page);
             return View(model);
         }

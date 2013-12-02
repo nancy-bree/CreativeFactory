@@ -44,6 +44,10 @@ body {
     text-align: center;
 }
 
+.searchbar {
+  min-width: 400px;
+}
+
 /* styles for validation helpers */
 .field-validation-error {
     color: #e80c4d;
@@ -85,10 +89,10 @@ margin-right: auto !important;
 .vote, .vote-score{
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  text-align: center;
-  color: #333;
+  text-align: right;
+  color: #2FA4E7;
   font-size: 1.5em;
-  display: inline;
+  display: inline-block;
 }
 .vote-score{cursor: text; font-weight: bold;}
 

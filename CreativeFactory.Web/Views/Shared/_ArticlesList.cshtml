@@ -1,34 +1,61 @@
 ﻿@model CreativeFactory.Entities.Article
 
-<div class="row" id="@Model.Id">
-    <div class="thumbnail">
-        <h4>@Html.ActionLink(Model.Title, "Details", "Article", new { id = Model.Id}, null)</h4>
-        <h5>@Resources.Author @Model.User.UserName</h5>
-        @if (!String.IsNullOrWhiteSpace(Model.Description))
-        {
-            <p>@Resources.Description: @Model.Description</p>
-        }
-        <p>@Resources.Items @Model.Items.Count</p>
-        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
-        @if (Model.Tags.Count == 0)
-        {
-            <small>@Resources.TagsNone</small>
-        }
-        else
-        {
-            <small>@Html.Raw(String.Join(", ", Model.Tags.Select(tag => Html.ActionLink(tag.Name, "Index", "Tag", new { id = tag.Id}, null).ToHtmlString()).ToArray()))</small>
-        }
-        @if (User.Identity.IsAuthenticated && (Model.UserId == WebSecurity.CurrentUserId))
-        {
-            <div>
-                @Html.ActionLink(Resources.Edit, "Edit", "Article", new {id = Model.Id}, new {@class = "btn btn-xs btn-primary", role = "button"})
-                @Html.ActionLink(Resources.Delete, "Delete", "Article", null, new {@class = "deleteBtn btn btn-xs btn-primary", role = "button"})
+<div id="@Model.Id">
+    <div class="thumbnail row">
+        <div class="col-md-6">
+            <h4>@Html.ActionLink(Model.Title, "Details", "Article", new { id = Model.Id}, null)
+                @if (Model.UserId == WebSecurity.CurrentUserId)
+                {
+                    <small>
+                        <a href="@Url.Action("Edit", "Article", new {id = Model.Id})">
+                            <span class="glyphicon glyphicon-pencil" title="@Resources.Edit"/>
+                        </a>&nbsp;
+                        <a href="@Url.Action("Delete", "Article")" class="deleteBtn">
+                            <span class="glyphicon glyphicon-trash" title="@Resources.Delete"/>
+                        </a>
+                    </small>
+                }
+            </h4>
+            <h5>@Resources.Author @Model.User.UserName</h5>
+            @if (!String.IsNullOrWhiteSpace(Model.Description))
+            {
+                <p>@Resources.Description: @Truncate(Model.Description, 57)</p>
+            }
+            <p>@Resources.Items @Model.Items.Count</p>
+            <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
+            @if (Model.Tags.Count == 0)
+            {
+                <small>@Resources.TagsNone</small>
+            }
+            else
+            {
+                <small>@Html.Raw(String.Join(", ", Model.Tags.Select(tag => Html.ActionLink(tag.Name, "Index", "Tag", new { id = tag.Id}, null).ToHtmlString()).ToArray()))</small>
+            }
+        </div>
+        @*<div class="col-md-6">
+            <div class="vote-span"><!-- voting-->
+                <div class="vote" data-action="vote" title="">
+                    <span class="glyphicon glyphicon-heart"/>
+                </div><!--vote up-->
+                <div class="vote-score" data-score="@item.Votes.Count">@item.Votes.Count</div>
             </div>
-        }
+        </div>*@
     </div>
 </div>
 <script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.min.js")"></script>
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/themes/base/jquery-ui.css")" />
 <script src="@Url.Content("~/Scripts/coffee/delete-record.js")"></script>
 
 <div id="dialog-confirm">@Resources.DeleteThis</div>
 
+@helper Truncate (string inputStr, int length)
+{    
+    if (inputStr.Length < length)
+    {
+        @inputStr
+    }
+    else
+    {
+        @inputStr.Substring(0, length)<text>...</text>
+    }
+}

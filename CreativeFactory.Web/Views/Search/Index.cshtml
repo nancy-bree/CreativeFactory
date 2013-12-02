@@ -1,0 +1,20 @@
+﻿@model PagedList.IPagedList<CreativeFactory.Entities.Item>
+@using PagedList.Mvc
+
+<div class="page-header center">
+    <h1>Результаты поиска <small>по запросу: "@Html.ViewBag.Title"</small></h1>
+</div>
+
+@if (Model.Count > 0)
+{
+
+        Html.RenderPartial("~/Views/Shared/_ItemsList.cshtml", Model);
+}
+else
+{
+    <p>@Resources.NoItemsFound</p>
+}
+
+@Html.PagedListPager(Model
+                    , page => Url.Action("Index", "Search", new RouteValueDictionary {{"searchString", ViewBag.Title}, {"page", page }})
+                    , PagedListRenderOptions.PageNumbersOnly)

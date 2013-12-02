@@ -309,6 +309,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Scripts\coffee\rating-system.coffee" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\autosave.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -353,6 +354,7 @@
     <Content Include="Scripts\raphael-min.js" />
     <Content Include="Scripts\raphael.js" />
     <Content Include="Scripts\to-markdown.js" />
+    <Content Include="Scripts\typeahead.min.js" />
     <Content Include="Scripts\_chart.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -401,6 +403,7 @@
     <Content Include="Views\Shared\_ActivityDiagram.cshtml" />
     <Content Include="Views\Shared\_PopularArticles.cshtml" />
     <Content Include="Views\Item\Edit.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

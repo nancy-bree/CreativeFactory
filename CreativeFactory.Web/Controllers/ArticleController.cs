@@ -92,6 +92,7 @@ namespace CreativeFactory.Web.Controllers
                 {
                     var user = _unitOfWork.UserRepository.GetByID(WebSecurity.CurrentUserId);
                     var articleToUpdate = _unitOfWork.ArticleRepository.GetByID(model.Id);
+                    articleToUpdate.Title = model.Title;
                     articleToUpdate.Description = model.Description;
                     articleToUpdate.User = user;
                     if ((model.Tags != null) && !String.IsNullOrWhiteSpace(model.Tags))
@@ -129,12 +130,12 @@ namespace CreativeFactory.Web.Controllers
         //
         // GET: /Article/Details
 
-        public ActionResult Details(int id = 1, int page = 1)
+        public ActionResult Details(int id = 1)
         {
             var article = _unitOfWork.ArticleRepository.GetByID(id);
             ViewBag.ArticleId = article.Id;
             ViewBag.UserId = article.UserId;
-            var model = new ArticleDetailsViewModel(article.Title, article.Description, article.CreatedDate, article.Tags, article.Items, page);
+            var model = new ArticleDetailsViewModel(article.Title, article.Description, article.CreatedDate, article.Tags, article.Items);
             return View(model);
         }
 

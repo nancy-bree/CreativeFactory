@@ -1,4 +1,6 @@
-﻿using CreativeFactory.DAL;
+﻿using System.Globalization;
+using System.Web.Caching;
+using CreativeFactory.DAL;
 using CreativeFactory.Entities;
 using CreativeFactory.Web.Models;
 using System;
@@ -130,10 +132,11 @@ namespace CreativeFactory.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetStats()
+        public JsonResult GetStats(/*string monthName*/)
         {
+            //var month = DateTime.ParseExact(monthName, "MMMM", CultureInfo.InvariantCulture).Month;
             var time = DateTime.Now;
-            var dict = _unitOfWork.ItemRepository.GetItemsStatistics(time.Month, time.Year);
+            var dict = _unitOfWork.ItemRepository.GetItemsStatistics(/*month*/time.Month, time.Year);
             var dates = dict.Keys.ToArray();
             var count = dict.Values.ToArray();
             return Json(new { count = count, dates = dates }, JsonRequestBehavior.AllowGet);

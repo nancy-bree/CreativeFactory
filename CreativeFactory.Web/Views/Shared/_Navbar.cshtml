@@ -19,7 +19,17 @@
                       {
                           <li>@Html.ActionLink(Resources.UserManager, "Users", "Admin")</li>
                       }
-                      <li><a href="@Url.Action("Index", "Search")"><span class="glyphicon glyphicon-search" style="font-size:12pt;"></span></a></li>
+                      <li class="dropdown">
+                          <a id="drop0" role="button" class="dropdown-toggle" data-toggle="dropdown" href="@Url.Action("Index", "Search")"><span class="glyphicon glyphicon-search" style="font-size:12pt;"></span></a>
+                          <ul class="dropdown-menu searchbar" role="menu" aria-labelledby = "drop0">
+                              <li>
+                                   @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { role = "search", @class = "navbar-form" }))
+                                    {
+                                        @:<input type="text" class="form-control" name="searchString" id="searchString">
+                                    }
+                              </li>
+                          </ul>
+                      </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                       <li class="dropdown">
@@ -58,7 +68,17 @@
               {
                   <ul class="nav navbar-nav">
                       <li>@Html.ActionLink(Resources.ArticlesNav, "", "Home")</li>
-                      <li><a href="#"><span class="glyphicon glyphicon-search" style="font-size:12pt;"></span></a></li>
+                      <li class="dropdown">
+                          <a id="drop0" role="button" class="dropdown-toggle" data-toggle="dropdown" href="@Url.Action("Index", "Search")"><span class="glyphicon glyphicon-search" style="font-size:12pt;"></span></a>
+                          <ul class="dropdown-menu searchbar" role="menu" aria-labelledby = "drop0">
+                              <li>
+                                  @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { role = "search", @class = "navbar-form" }))
+                                    {
+                                        @:<input type="text" class="form-control" name="searchString" id="searchString">
+                                    }
+                              </li>
+                          </ul>
+                      </li>
                   </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
@@ -98,6 +118,9 @@
 </div>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.cookie.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/dropdown.js")"></script>
+<script>
+    $('.searchbar').click(function (event) { event.stopPropagation(); });
+</script>
 <script>
     if ($.cookie("css")) {
         $("link#site-theme").attr("href", $.cookie("css"));

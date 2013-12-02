@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<CreativeFactory.Entities.Item>
+﻿@model IEnumerable<CreativeFactory.Entities.Item>
 @using PagedList.Mvc
 @{int i = 1;}
 <div id="sortable" data-url="@Url.Action("GetNewItemsOrder", "Item")" 
@@ -8,22 +8,30 @@
                     data-votelogic="@Url.Action("AddRemoveVote", "Rating")">
 @foreach (var item in Model)
 {
-        <div class="row" id="@item.Id">
-            <div class="thumbnail col-md-6">
-                <h4>@i. @Html.ActionLink(item.Title, "Details", "Item", new { id = item.Id}, null)</h4>
-                <small>@item.CreatedDate</small>
-                @if (item.Article.UserId == WebSecurity.CurrentUserId)
-                {
-                    <div>
-                        @Html.ActionLink(Resources.Edit, "Edit", "Item", new {id = item.Id}, new {@class = "btn btn-xs btn-primary", role = "button"})
-                        @Html.ActionLink(Resources.Delete, "Delete", "Item", null, new {@class = "deleteBtn btn btn-xs btn-primary", role = "button"})
+    <div class="row line" id="@item.Id">
+            <div class="thumbnail row col-md-6">
+                <div class="col-md-9">
+                    <h4>@i. @Html.ActionLink(item.Title, "Details", "Item", new { id = item.Id}, null)
+                    @if (item.Article.UserId == WebSecurity.CurrentUserId)
+                    {
+                        <small>
+                            <a href="@Url.Action("Edit", "Item", new {id = item.Id})">
+                                <span class="glyphicon glyphicon-pencil" title="@Resources.Edit"/>
+                            </a>&nbsp;
+                            <a href="@Url.Action("Delete", "Item")" class="deleteBtn">
+                                <span class="glyphicon glyphicon-trash" title="@Resources.Delete"/>
+                            </a>
+                        </small>
+                    }
+                </h4>
+                </div>
+                <div class="col-md-3">
+                    <div class="vote-span"><!-- voting-->
+                        <div class="vote" data-action="vote" title="">
+                            <span class="glyphicon glyphicon-heart-empty"/>
+                        </div><!--vote up-->
+                        <div class="vote-score" data-score="@item.Votes.Count">@item.Votes.Count</div>
                     </div>
-                }
-                <div class="vote-span"><!-- voting-->
-                    <div class="vote" data-action="vote" title="">
-                        <span class="glyphicon glyphicon-heart-empty"/>
-                    </div><!--vote up-->
-                    <div class="vote-score" data-score="@item.Votes.Count">@item.Votes.Count</div>
                 </div>
             </div>
         </div>
@@ -31,77 +39,14 @@
 }
 </div>
 
-@Html.PagedListPager(Model
-                    , page => Url.Action("Details", "Article", new RouteValueDictionary {{"id", ViewBag.ArticleId}, {"page", page }})
-                    , PagedListRenderOptions.PageNumbersOnly)
-
 <script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.min.js")"></script>
-<script src="@Url.Content("~/Scripts/coffee/reorder.coffee")"></script>
+<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/themes/base/jquery-ui.css")" />
+@if (User.Identity.IsAuthenticated && Model.First().Article.UserId == WebSecurity.CurrentUserId)
+{
+    <script src="@Url.Content("~/Scripts/coffee/reorder.coffee")"></script>
+}
 
-<script>
-    $(function() {
-        var ownerId = $("#sortable").data("ownerid");
-        var currentUserId = $("#sortable").data("currentuserid");
-        $(".row").each(function () {
-            var self = $(this);
-            var span = self.find(".vote-span").find("span");
-            if (ownerId == currentUserId || currentUserId == -1) {
-                span.hide(); //hide heart
-            }
-            else {
-                    $.ajax({
-                        type: "POST",
-                        url: $("#sortable").data("hasvotedurl"),
-                        data: { userId: currentUserId, itemId: self.attr("id") },
-                        success: function (data) {
-                            if (data.result) { //show empty heart
-                                span.removeClass("glyphicon-heart-empty");
-                                span.addClass("glyphicon-heart");
-                            }
-                        }
-                    });
-                }
-        });
-    });
-
-    $(function() {
-        $.ajaxSetup({
-            url: $("#sortable").data("votelogic"),
-            type: 'POST',
-            cache: 'false'
-        });
-
-        $('.vote').click(function () {
-            var self = $(this);
-            var span = self.find("span");
-            var currentUserId = $("#sortable").data("currentuserid");
-            var parent = self.parent().parent().parent();
-            var itemid = parent.attr('id');
-            var score = parent.find('.vote-score').data("score");
-            if (span.hasClass("glyphicon-heart")) { // if already voted
-                $.ajax({
-                    data: { userId: currentUserId, itemId: itemid, action: "remove" },
-                    success: function() {
-                        parent.find('.vote-score').html(--score).data('score', score);
-                        span.removeClass("glyphicon-heart");
-                        span.addClass("glyphicon-heart-empty");
-                    }
-                });
-            }
-            else
-                {
-                    $.ajax({
-                        data: { userId: currentUserId, itemId: itemid, action: "add" },
-                        success: function() {
-                            parent.find('.vote-score').html(++score).data('score', +score);
-                            span.removeClass("glyphicon-heart-empty");
-                            span.addClass("glyphicon-heart");
-                        }
-                    });
-                }
-        });
-    });
-</script>
+<script src="@Url.Content("~/Scripts/coffee/rating-system.coffee")"></script>
 
 <script src="@Url.Content("~/Scripts/coffee/delete-record.js")"></script>
 
