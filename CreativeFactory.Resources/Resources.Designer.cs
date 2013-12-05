@@ -709,6 +709,24 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search results.
+        /// </summary>
+        public static string SearchRes {
+            get {
+                return ResourceManager.GetString("SearchRes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for.
+        /// </summary>
+        public static string SearchResFor {
+            get {
+                return ResourceManager.GetString("SearchResFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creatives tagged.
         /// </summary>
         public static string TaggedArticles {

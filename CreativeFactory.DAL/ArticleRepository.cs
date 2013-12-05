@@ -14,7 +14,7 @@ namespace CreativeFactory.DAL
         }
 
         /// <summary>
-        /// Gets all user articls.
+        /// Gets all user articles.
         /// </summary>
         /// <param name="userId">Uticle Id.</param>
         /// <returns>List of articles contains to a user.</returns>
@@ -50,7 +50,7 @@ namespace CreativeFactory.DAL
             }
         }
 
-        public IEnumerable<int> GetPopularArticlesId()
+        public IDictionary<int, int> GetPopularArticlesIdAndVotes()
         {
             //select Items.ArticleId, count(*) Votes
             //from Items
@@ -59,13 +59,22 @@ namespace CreativeFactory.DAL
             //group by Items.ArticleId
             //order by Votes desc
 
-            var query = _context.Database
-                        .SqlQuery<int>("SELECT Items.ArticleId FROM Items " +
-                                       "INNER JOIN Ratings " +
-                                       "ON Items.Id = Ratings.ItemId " +
-                                       "GROUP BY Items.ArticleId " +
-                                       "ORDER BY COUNT(*) DESC");
-            return query.ToList();
+            //var query = _context.Database
+            //            .SqlQuery<int>("SELECT Items.ArticleId FROM Items " +
+            //                           "INNER JOIN Ratings " +
+            //                           "ON Items.Id = Ratings.ItemId " +
+            //                           "GROUP BY Items.ArticleId " +
+            //                           "ORDER BY COUNT(*) DESC");
+
+            var query = (from item in _context.Item
+                join rating in _context.Rating on item.Id equals rating.ItemId
+                group item by item.ArticleId
+                into result
+                let votes = result.Count()
+                orderby votes descending
+                select new {Id = result.Key, Votes = votes}).ToDictionary(x => x.Id, x => x.Votes);
+
+            return query;
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿@model CreativeFactory.Entities.Article
+﻿@model CreativeFactory.Web.Models.ArticleUnitViewModel
 
 <div id="@Model.Id">
     <div class="thumbnail row">
-        <div class="col-md-6">
+        <div class="col-md-10">
             <h4>@Html.ActionLink(Model.Title, "Details", "Article", new { id = Model.Id}, null)
                 @if (Model.UserId == WebSecurity.CurrentUserId)
                 {
@@ -16,12 +16,12 @@
                     </small>
                 }
             </h4>
-            <h5>@Resources.Author @Model.User.UserName</h5>
+            <h5>@Resources.Author @Model.Username</h5>
             @if (!String.IsNullOrWhiteSpace(Model.Description))
             {
                 <p>@Resources.Description: @Truncate(Model.Description, 57)</p>
             }
-            <p>@Resources.Items @Model.Items.Count</p>
+            <p>@Resources.Items @Model.Items</p>
             <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
             @if (Model.Tags.Count == 0)
             {
@@ -32,14 +32,11 @@
                 <small>@Html.Raw(String.Join(", ", Model.Tags.Select(tag => Html.ActionLink(tag.Name, "Index", "Tag", new { id = tag.Id}, null).ToHtmlString()).ToArray()))</small>
             }
         </div>
-        @*<div class="col-md-6">
+        <div class="col-md-2">
             <div class="vote-span"><!-- voting-->
-                <div class="vote" data-action="vote" title="">
-                    <span class="glyphicon glyphicon-heart"/>
-                </div><!--vote up-->
-                <div class="vote-score" data-score="@item.Votes.Count">@item.Votes.Count</div>
+                <div class="vote-score">+@Model.Votes</div>
             </div>
-        </div>*@
+        </div>
     </div>
 </div>
 <script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.min.js")"></script>

@@ -1,4 +1,5 @@
-﻿using PagedList;
+﻿using CreativeFactory.Web.Services;
+using PagedList;
 using CreativeFactory.DAL;
 using System.Linq;
 using System.Web.Mvc;
@@ -21,7 +22,9 @@ namespace CreativeFactory.Web.Controllers
         public ActionResult Index(int id = 1, int page = 1)
         {
             ViewBag.Tag = _unitOfWork.TagRepository.GetByID(id);
-            return View(_unitOfWork.ArticleRepository.Get().Where(x => x.Tags.Any(y => y.Id == id)).ToPagedList(page, 30));
+            var articles = _unitOfWork.ArticleRepository.Get().Where(x => x.Tags.Any(y => y.Id == id));
+            var list = ArticleService.ArticleUnitViewModelList(_unitOfWork, articles);
+            return View(list.ToPagedList(page, 30));
         }
 
         //

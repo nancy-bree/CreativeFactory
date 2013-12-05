@@ -378,4 +378,10 @@
   <data name="Preview" xml:space="preserve">
     <value>Предпросмотр</value>
   </data>
+  <data name="SearchRes" xml:space="preserve">
+    <value>Результаты поиска</value>
+  </data>
+  <data name="SearchResFor" xml:space="preserve">
+    <value>по запросу:</value>
+  </data>
 </root>

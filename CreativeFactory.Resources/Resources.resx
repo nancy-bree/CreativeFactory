@@ -378,4 +378,10 @@
   <data name="Preview" xml:space="preserve">
     <value>Preview</value>
   </data>
+  <data name="SearchRes" xml:space="preserve">
+    <value>Search results</value>
+  </data>
+  <data name="SearchResFor" xml:space="preserve">
+    <value>for</value>
+  </data>
 </root>

@@ -96,6 +96,12 @@ margin-right: auto !important;
 }
 .vote-score{cursor: text; font-weight: bold;}
 
+.read {
+  font-size: 1.5em;
+  margin: 5px auto;
+  display: table;
+}
+
 .username-field {
     margin: 5px auto;
     display: table;

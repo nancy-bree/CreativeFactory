@@ -100,7 +100,7 @@ namespace CreativeFactory.Web.Controllers
                     itemToUpdate.Body = html;
                     _unitOfWork.ItemRepository.Update(itemToUpdate);
                     _unitOfWork.Save();
-                    return RedirectToAction("Details", "Item", new { id = model.Id });
+                    return RedirectToAction("Details", "Article", new { id = model.ArticleId });
                 }
             }
             catch (DataException)

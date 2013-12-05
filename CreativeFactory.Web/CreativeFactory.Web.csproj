@@ -197,8 +197,10 @@
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Models\ArticleDetailsViewModel.cs" />
+    <Compile Include="Models\ArticleUnitViewModel.cs" />
     <Compile Include="Models\ItemViewModel.cs" />
     <Compile Include="Models\MainPageViewModel.cs" />
+    <Compile Include="Services\ArticleService.cs" />
     <Compile Include="Services\MarkdownDeepExtensions.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Global.asax.cs">
@@ -350,6 +352,7 @@
     <Content Include="Scripts\mdd_modal_background.png" />
     <Content Include="Scripts\mdd_styles.css" />
     <Content Include="Scripts\mdd_toolbar.png" />
+    <Content Include="Scripts\modal.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\raphael-min.js" />
     <Content Include="Scripts\raphael.js" />

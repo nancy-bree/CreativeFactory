@@ -15,9 +15,9 @@ namespace CreativeFactory.Web.Models
     {
         public IEnumerable<Tag> TagCloud { get; set; }
 
-        public IPagedList<Article> PopularArticles { get; set; }
+        public IPagedList<ArticleUnitViewModel> PopularArticles { get; set; }
 
-        public MainPageViewModel(IEnumerable<Tag> tagCloud, IEnumerable<Article> popularArticles, int page = 1)
+        public MainPageViewModel(IEnumerable<Tag> tagCloud, IEnumerable<ArticleUnitViewModel> popularArticles, int page = 1)
         {
             TagCloud = tagCloud;
             PopularArticles = popularArticles.ToPagedList(page, Settings.Default.ArticlesPerPage);

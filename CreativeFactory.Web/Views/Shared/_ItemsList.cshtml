@@ -2,30 +2,30 @@
 @using PagedList.Mvc
 @{int i = 1;}
 <div id="sortable" data-url="@Url.Action("GetNewItemsOrder", "Item")" 
-                    data-ownerid="@Model.First().Article.UserId" 
-                    data-hasvotedurl="@Url.Action("HasVoted", "Rating")" 
-                    data-currentuserid="@WebSecurity.CurrentUserId"
-                    data-votelogic="@Url.Action("AddRemoveVote", "Rating")">
-@foreach (var item in Model)
-{
-    <div class="row line" id="@item.Id">
-            <div class="thumbnail row col-md-6">
+     data-ownerid="@Model.First().Article.UserId" 
+     data-hasvotedurl="@Url.Action("HasVoted", "Rating")" 
+     data-currentuserid="@WebSecurity.CurrentUserId"
+     data-votelogic="@Url.Action("AddRemoveVote", "Rating")">
+    @foreach (var item in Model)
+    {
+        <div class="row line" id="@item.Id">
+            <div class="thumbnail row">
                 <div class="col-md-9">
                     <h4>@i. @Html.ActionLink(item.Title, "Details", "Item", new { id = item.Id}, null)
-                    @if (item.Article.UserId == WebSecurity.CurrentUserId)
-                    {
-                        <small>
-                            <a href="@Url.Action("Edit", "Item", new {id = item.Id})">
-                                <span class="glyphicon glyphicon-pencil" title="@Resources.Edit"/>
-                            </a>&nbsp;
-                            <a href="@Url.Action("Delete", "Item")" class="deleteBtn">
-                                <span class="glyphicon glyphicon-trash" title="@Resources.Delete"/>
-                            </a>
-                        </small>
-                    }
-                </h4>
+                        @if (item.Article.UserId == WebSecurity.CurrentUserId)
+                        {
+                            <small>
+                                <a href="@Url.Action("Edit", "Item", new {id = item.Id})">
+                                    <span class="glyphicon glyphicon-pencil" title="@Resources.Edit"/>
+                                </a>&nbsp;
+                                <a href="@Url.Action("Delete", "Item")" class="deleteBtn">
+                                    <span class="glyphicon glyphicon-trash" title="@Resources.Delete"/>
+                                </a>
+                            </small>
+                        }
+                    </h4>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="vote-span"><!-- voting-->
                         <div class="vote" data-action="vote" title="">
                             <span class="glyphicon glyphicon-heart-empty"/>
@@ -33,11 +33,34 @@
                         <div class="vote-score" data-score="@item.Votes.Count">@item.Votes.Count</div>
                     </div>
                 </div>
+                <div class="read col-md-1">
+                    <a href="#" data-toggle="modal" data-target="@String.Concat("#myModal", item.Id)">
+                        <span class="glyphicon glyphicon-book"/>
+                    </a>
+                </div>
             </div>
         </div>
-    i++;
-}
+        i++;
+    }
 </div>
+
+@foreach (var item in Model)
+{
+    <!-- Modal -->
+<div class="modal fade" id="@String.Concat("myModal", item.Id)" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">@item.Title</h4>
+      </div>
+      <div class="modal-body">
+        @Html.Raw(item.Body)
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+}
 
 <script src="@Url.Content("~/Scripts/jquery-ui-1.10.3.min.js")"></script>
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/themes/base/jquery-ui.css")" />
@@ -49,6 +72,8 @@
 <script src="@Url.Content("~/Scripts/coffee/rating-system.coffee")"></script>
 
 <script src="@Url.Content("~/Scripts/coffee/delete-record.js")"></script>
+
+<script src="@Url.Content("~/Scripts/modal.js")"></script>
 
 
 <div id="dialog-confirm">@Resources.DeleteThis</div>

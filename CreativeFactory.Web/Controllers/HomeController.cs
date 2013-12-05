@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CreativeFactory.Web.Services;
 using PagedList;
 using CreativeFactory.Web.Properties;
 using CreativeFactory.Web.Models;
@@ -27,8 +28,8 @@ namespace CreativeFactory.Web.Controllers
         //[OutputCache(Duration = 6000, VaryByParam = "none")]
         public ActionResult Index(int page = 1)
         {
-            var popularId = _unitOfWork.ArticleRepository.GetPopularArticlesId();
-            var popularArticles = popularId.Select(id => _unitOfWork.ArticleRepository.GetByID(id)).ToList();
+            var list = _unitOfWork.ArticleRepository.Get();
+            var popularArticles = ArticleService.ArticleUnitViewModelList(_unitOfWork, list).Where(x => x.Votes > 0);
             var tags = _unitOfWork.TagRepository.Get(x => x.OrderBy(y => y.Name));
             ViewBag.TotalArticlesCount = _unitOfWork.ArticleRepository.Get().Count();
             var model = new MainPageViewModel(tags, popularArticles, page);
@@ -38,17 +39,22 @@ namespace CreativeFactory.Web.Controllers
         public ActionResult MyArticles(int userId, int page = 1)
         {
             ViewBag.UserId = userId;
-            return View(_unitOfWork.ArticleRepository
-                .GetAllUserArticles(userId)
+            var userArticles =
+                _unitOfWork.ArticleRepository.Get().Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedDate);
+            var list = ArticleService.ArticleUnitViewModelList(_unitOfWork, userArticles);
+            return View(list
                 .ToPagedList(page, Settings.Default.ArticlesPerPage));
         }
 
         public ActionResult AllArticles(int page = 1)
         {
-            return View(_unitOfWork.ArticleRepository
-                .Get(x => x.OrderByDescending(y => y.CreatedDate))
+            var articles = _unitOfWork.ArticleRepository.Get(x => x.OrderByDescending(y => y.CreatedDate));
+            var newList = ArticleService.ArticleUnitViewModelList(_unitOfWork, articles);
+            return View(newList
                 .ToPagedList(page, Settings.Default.ArticlesPerPage));
         }
+
+        
 
         public ActionResult SetCulture(string returnUrl, string culture)
         {
