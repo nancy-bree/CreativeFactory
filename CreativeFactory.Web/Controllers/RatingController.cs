@@ -46,6 +46,10 @@ namespace CreativeFactory.Web.Controllers
                     return Json(new {success = false});
             }
             _unitOfWork.Save();
+            if (HttpRuntime.Cache["PopularArticlesAndVotes"] != null)
+            {
+                HttpRuntime.Cache.Remove("PopularArticlesAndVotes");
+            }
             return Json(new {success = true});
         }
 

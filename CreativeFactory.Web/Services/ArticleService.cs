@@ -12,7 +12,12 @@ namespace CreativeFactory.Web.Services
     {
         public static IEnumerable<ArticleUnitViewModel> ArticleUnitViewModelList(IUnitOfWork uow, IEnumerable<Article> articles)
         {
-            var voteslist = uow.ArticleRepository.GetPopularArticlesIdAndVotes();
+            var votesList = HttpRuntime.Cache.Get("PopularArticlesAndVotes") as IDictionary<int, int>;
+            if (votesList == null)
+            {
+                votesList = uow.ArticleRepository.GetPopularArticlesIdAndVotes();
+                HttpRuntime.Cache["PopularArticlesAndVotes"] = votesList;
+            }
             var newList = new List<ArticleUnitViewModel>();
             foreach (var item in articles)
             {
@@ -25,7 +30,7 @@ namespace CreativeFactory.Web.Services
                     Username = item.User.UserName,
                     Items = item.Items.Count,
                     Tags = item.Tags,
-                    Votes = voteslist.Where(x => x.Key == item.Id).Select(x => x.Value).FirstOrDefault()
+                    Votes = votesList.Where(x => x.Key == item.Id).Select(x => x.Value).FirstOrDefault()
                 });
             }
             return newList;

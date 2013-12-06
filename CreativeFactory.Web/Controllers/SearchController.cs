@@ -22,6 +22,7 @@ namespace CreativeFactory.Web.Controllers
         //
         // GET: /Search/
 
+        [OutputCache(Duration = 60, VaryByParam = "searchString")]
         public ActionResult Index(string searchString, int page = 1)
         {
             var result = new List<Item>();

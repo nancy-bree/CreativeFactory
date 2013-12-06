@@ -23,14 +23,6 @@ namespace CreativeFactory.Web.Controllers
         }
 
         //
-        // GET: /Article/
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        //
         // GET: /Article/Add
 
         [Authorize]
@@ -124,6 +116,7 @@ namespace CreativeFactory.Web.Controllers
         {
             _unitOfWork.ArticleRepository.Delete(id);
             _unitOfWork.Save();
+            ClearCache();
             return Json(new { success = true });
         }
 
@@ -153,6 +146,23 @@ namespace CreativeFactory.Web.Controllers
             }
             _unitOfWork.ArticleRepository.Insert(article);
             _unitOfWork.Save();
+            ClearCache();
+        }
+
+        private static void ClearCache()
+        {
+            if (HttpRuntime.Cache["PopularArticlesAndVotes"] != null)
+            {
+                HttpRuntime.Cache.Remove("PopularArticlesAndVotes");
+            }
+            if (HttpRuntime.Cache["AllArticles"] != null)
+            {
+                HttpRuntime.Cache.Remove("AllArticles");
+            }
+            if (HttpRuntime.Cache["UserArticless"] != null)
+            {
+                HttpRuntime.Cache.Remove("UserArticles");
+            }
         }
 
         private void SetTags(string p, Article article)
@@ -177,6 +187,10 @@ namespace CreativeFactory.Web.Controllers
                     };
                     _unitOfWork.TagRepository.Insert(tmp);
                     _unitOfWork.Save();
+                    if (HttpRuntime.Cache["AllTags"] != null)
+                    {
+                        HttpRuntime.Cache.Remove("AllTags");
+                    }
                 }
                 article.Tags.Add(tmp);
             }

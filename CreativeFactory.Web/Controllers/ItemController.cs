@@ -183,6 +183,7 @@ namespace CreativeFactory.Web.Controllers
         {
             _unitOfWork.ItemRepository.Delete(id);
             _unitOfWork.Save();
+            ClearCache();
             return Json(new { success = true });
         }
 
@@ -191,7 +192,13 @@ namespace CreativeFactory.Web.Controllers
         {
             //var month = DateTime.ParseExact(monthName, "MMMM", CultureInfo.InvariantCulture).Month;
             var time = DateTime.Now;
-            var dict = _unitOfWork.ItemRepository.GetItemsStatistics(/*month*/time.Month, time.Year);
+            var dict = HttpRuntime.Cache.Get("ActivityStats") as IDictionary<int, int>;
+            if (dict == null)
+            {
+                dict =
+                _unitOfWork.ItemRepository.GetItemsStatistics(/*month*/time.Month, time.Year);
+                HttpRuntime.Cache["ActivityStats"] = dict;
+            }
             var dates = dict.Keys.ToArray();
             var count = dict.Values.ToArray();
             return Json(new { count = count, dates = dates }, JsonRequestBehavior.AllowGet);
@@ -223,6 +230,7 @@ namespace CreativeFactory.Web.Controllers
             };
             _unitOfWork.ItemRepository.Insert(item);
             _unitOfWork.Save();
+            ClearCache();
         }
 
         private int GetItemOrder(int articleId)
@@ -245,6 +253,26 @@ namespace CreativeFactory.Web.Controllers
             }
             _unitOfWork.Save();
             return Json(new { success = true });
+        }
+
+        private static void ClearCache()
+        {
+            if (HttpRuntime.Cache["PopularArticlesAndVotes"] != null)
+            {
+                HttpRuntime.Cache.Remove("PopularArticlesAndVotes");
+            }
+            if (HttpRuntime.Cache["AllArticles"] != null)
+            {
+                HttpRuntime.Cache.Remove("AllArticles");
+            }
+            if (HttpRuntime.Cache["UserArticless"] != null)
+            {
+                HttpRuntime.Cache.Remove("UserArticles");
+            }
+            if (HttpRuntime.Cache["ActivityStats"] != null)
+            {
+                HttpRuntime.Cache.Remove("ActivityStats");
+            }
         }
     }
 }
