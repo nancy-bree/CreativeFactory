@@ -196,11 +196,13 @@
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Models\NewItemViewModel.cs" />
     <Compile Include="Models\ArticleDetailsViewModel.cs" />
     <Compile Include="Models\ArticleUnitViewModel.cs" />
     <Compile Include="Models\ItemViewModel.cs" />
     <Compile Include="Models\MainPageViewModel.cs" />
     <Compile Include="Services\ArticleService.cs" />
+    <Compile Include="Services\DraftService.cs" />
     <Compile Include="Services\MarkdownDeepExtensions.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Global.asax.cs">
@@ -390,7 +392,6 @@
     <Content Include="Views\Article\Add.cshtml" />
     <Content Include="Views\Article\Edit.cshtml" />
     <Content Include="Views\Article\Details.cshtml" />
-    <Content Include="Views\Item\Add.cshtml" />
     <Content Include="Views\Home\AllArticles.cshtml" />
     <Content Include="Views\Shared\_ArticlesList.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
@@ -407,6 +408,7 @@
     <Content Include="Views\Shared\_PopularArticles.cshtml" />
     <Content Include="Views\Item\Edit.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Item\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

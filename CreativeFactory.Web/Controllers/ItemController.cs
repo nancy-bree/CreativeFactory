@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.IO;
 using System.Web.Caching;
 using CreativeFactory.DAL;
 using CreativeFactory.Entities;
@@ -9,6 +10,8 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CreativeFactory.Web.Properties;
+using CreativeFactory.Web.Services;
 using WebMatrix.WebData;
 
 namespace CreativeFactory.Web.Controllers
@@ -37,7 +40,28 @@ namespace CreativeFactory.Web.Controllers
         public ActionResult Add(int articleId)
         {
             ViewBag.ArticleId = articleId;
-            return View();
+            if (Request.Cookies["_autosave"] != null)
+            {
+                var cookie = Request.Cookies["_autosave"].Value;
+                var model = new NewItemViewModel
+                {
+                    CookieToken = cookie,
+                    Body = DraftService.GetDraft(cookie)
+                };
+                return View(model);
+            }
+            else
+            {
+                var cookieToken = Guid.NewGuid().ToString();
+                var model = new NewItemViewModel { CookieToken = cookieToken };
+                var cookie = new HttpCookie("_autosave")
+                {
+                    Value = cookieToken,
+                    Expires = DateTime.Now.AddDays(1)
+                };
+                Response.Cookies.Add(cookie);
+                return View(model);
+            }
         }
 
         //
@@ -45,13 +69,27 @@ namespace CreativeFactory.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(Item model)
+        public ActionResult Add(NewItemViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    AddItem(model);
+                    var item = new Item
+                    {
+                        Id = model.Id,
+                        ArticleId = model.ArticleId,
+                        Body = model.Body,
+                        Title = model.Title
+                    };
+                    if (Request.Cookies["_autosave"] != null)
+                    {
+                        var cookie = Request.Cookies["_autosave"];
+                        cookie.Expires = DateTime.Now.AddDays(-1);
+                        Response.Cookies.Set(cookie);
+                    }
+                    DraftService.DeleteDraft(model.CookieToken);
+                    AddItem(item);
                     return RedirectToAction("Details", "Article", new { id = model.ArticleId });
                 }
             }
@@ -146,7 +184,12 @@ namespace CreativeFactory.Web.Controllers
         {
             // TODO: Save the form values and return a JSON result 
             // to indicate if the save went succesfully
-            var content = form[0];
+            if (Request.Cookies["_autosave"] != null)
+            {
+                var filename = Request.Cookies["_autosave"].Value;
+                var content = form[0];
+                DraftService.SaveDraft(filename, content);
+            }
             return Json(new { success = true });
         }
 
