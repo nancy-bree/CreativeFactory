@@ -304,16 +304,16 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\coffee\change-role.js" />
     <Content Include="Scripts\coffee\delete-record.js" />
     <Content Include="Scripts\coffee\delete-user.js" />
     <Content Include="Scripts\coffee\reorder.coffee" />
-    <Content Include="Scripts\coffee\delete-user.coffee" />
     <Content Include="Scripts\coffee\reset-password.coffee" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Scripts\coffee\rating-system.coffee" />
+    <Content Include="Scripts\coffee\change-font-size.coffee" />
+    <Content Include="Scripts\coffee\switch-theme.coffee" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\autosave.js" />
     <Content Include="Scripts\bootstrap.js" />

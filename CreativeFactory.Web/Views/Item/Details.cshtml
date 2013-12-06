@@ -7,7 +7,9 @@
 <div class="page-header center">
   <h1>@Model.Title</h1>
 </div>
-
-<div class="thumbnail">@Html.Raw(HttpUtility.HtmlDecode(Model.Body))</div>
-
-
+<div id="changeFont" class="center">
+    <a href="#" class="btn btn-default btn-sm increase">A+</a>
+    <a href="#" class="btn btn-default btn-sm resetMe">Reset</a>
+    <a href="#" class="btn btn-default btn-sm decrease">A-</a>
+</div><br />
+<div class="thumbnail" id="body-content">@Html.Raw(HttpUtility.HtmlDecode(Model.Body))</div>

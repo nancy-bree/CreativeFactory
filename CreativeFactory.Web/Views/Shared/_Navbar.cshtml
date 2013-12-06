@@ -121,15 +121,4 @@
 <script>
     $('.searchbar').click(function (event) { event.stopPropagation(); });
 </script>
-<script>
-    if ($.cookie("css")) {
-        $("link#site-theme").attr("href", $.cookie("css"));
-    }
-    $(document).ready(function () {
-        $("a.theme").click(function () {
-            $("link#site-theme").attr("href", $(this).attr('rel'));
-            $.cookie("css", $(this).attr('rel'), { expires: 10, path: '/' });
-            return false;
-        });
-    });
-</script>
+<script src="@Url.Content("~/Scripts/coffee/switch-theme.coffee")"></script>
