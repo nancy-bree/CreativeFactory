@@ -42,11 +42,17 @@ namespace CreativeFactory.Web.Controllers
             ViewBag.ArticleId = articleId;
             if (Request.Cookies["_autosave"] != null)
             {
+                var title = String.Empty;
+                if (Request.Cookies["_item-title"] != null)
+                {
+                    title = Request.Cookies["_item-title"].Value;
+                }
                 var cookie = Request.Cookies["_autosave"].Value;
                 var model = new NewItemViewModel
                 {
                     CookieToken = cookie,
-                    Body = DraftService.GetDraft(cookie)
+                    Body = DraftService.GetDraft(cookie),
+                    Title = title
                 };
                 return View(model);
             }
@@ -59,7 +65,12 @@ namespace CreativeFactory.Web.Controllers
                     Value = cookieToken,
                     Expires = DateTime.Now.AddDays(1)
                 };
+                var titleCookie = new HttpCookie("_item-title")
+                {
+                    Expires = DateTime.Now.AddDays(1)
+                };
                 Response.Cookies.Add(cookie);
+                Response.Cookies.Add(titleCookie);
                 return View(model);
             }
         }
@@ -85,6 +96,12 @@ namespace CreativeFactory.Web.Controllers
                     if (Request.Cookies["_autosave"] != null)
                     {
                         var cookie = Request.Cookies["_autosave"];
+                        cookie.Expires = DateTime.Now.AddDays(-1);
+                        Response.Cookies.Set(cookie);
+                    }
+                    if (Request.Cookies["_item-title"] != null)
+                    {
+                        var cookie = Request.Cookies["_item-title"];
                         cookie.Expires = DateTime.Now.AddDays(-1);
                         Response.Cookies.Set(cookie);
                     }

@@ -54,11 +54,12 @@
 <script>
     $(function () {
         $('#Body').autosave({
-            delay: 10000,
+            delay: 5000,
             url: '@Url.Action("SaveDraft", "Item")',
             afterSave: function () {
                 $("#message").html("Data updated successfully").show();//...show a message...
                 setTimeout('fadeMessage()', 3000);
+                $.cookie("_item-title", $('#Title').val(), { expires: 1, path: '/' });
             }
         });
     });
@@ -67,4 +68,3 @@
         $('#message').fadeOut('slow');
     }
 </script>
-
