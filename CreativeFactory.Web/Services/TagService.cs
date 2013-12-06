@@ -26,11 +26,11 @@ namespace CreativeFactory.Web.Services
         /// Defines CSS class name for tag cloud.
         /// </summary>
         /// <param name="tag">A number of photos related to tag.</param>
-        /// <param name="photos">A number of all photos.</param>
+        /// <param name="articles">A number of all photos.</param>
         /// <returns>CSS class name.</returns>
-        public static string GetTagClass(int tag, int photos)
+        public static string GetTagClass(int tag, int articles)
         {
-            var result = (tag * 100) / photos;
+            var result = (tag * 100) / articles;
             if (result <= 1)
                 return "tag1";
             if (result <= 4)
@@ -43,7 +43,7 @@ namespace CreativeFactory.Web.Services
                 return "tag5";
             if (result <= 30)
                 return "tag6";
-            return result <= 50 ? "tag7" : "";
+            return result <= 50 ? "tag7" : "tag8";
         }
     }
 }

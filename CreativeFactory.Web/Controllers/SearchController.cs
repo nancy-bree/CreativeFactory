@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CreativeFactory.DAL;
+using CreativeFactory.Entities;
 using CreativeFactory.Web.Properties;
 using PagedList;
 
@@ -23,13 +24,14 @@ namespace CreativeFactory.Web.Controllers
 
         public ActionResult Index(string searchString, int page = 1)
         {
-            //if (!string.IsNullOrEmpty(searchString))
-            //{
+            var result = new List<Item>();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
                 ViewBag.Title = searchString;
-                return
-                    View(_unitOfWork.ItemRepository.FindInItems(searchString)
-                        .ToPagedList(page, Settings.Default.ItemsPerPage));
-            //}
+                result = _unitOfWork.ItemRepository.FindInItems(searchString).ToList();
+            }
+            return View(result.ToPagedList(page, Settings.Default.ItemsPerPage));
         }
 
     }
