@@ -1,4 +1,7 @@
-﻿using CreativeFactory.Web.Services;
+﻿using System.Collections.Generic;
+using System.Web;
+using CreativeFactory.Entities;
+using CreativeFactory.Web.Services;
 using PagedList;
 using CreativeFactory.DAL;
 using System.Linq;
@@ -30,11 +33,17 @@ namespace CreativeFactory.Web.Controllers
         //
         // GET: /Tag/GetTags
 
-        [OutputCache(Duration = 60, VaryByParam = "term")]
-        public JsonResult GetTags(string term)
+        public JsonResult GetTags()
         {
-            var tags = _unitOfWork.TagRepository.Get().Where(x => x.Name.ToUpper().Contains(term.ToUpper())).Select(x => x.Name).ToArray();
-            return Json(tags, JsonRequestBehavior.AllowGet);
+            var tags = HttpRuntime.Cache.Get("AllTags") as IEnumerable<Tag>;
+            if (tags == null)
+            {
+                tags =
+                _unitOfWork.TagRepository.Get(x => x.OrderBy(y => y.Name));
+                HttpRuntime.Cache["AllTags"] = tags;
+            }
+            var tagsArray = tags.Select(x => x.Name).ToArray();
+            return Json(tagsArray, JsonRequestBehavior.AllowGet);
         }
 
     }

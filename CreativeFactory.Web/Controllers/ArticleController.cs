@@ -90,6 +90,7 @@ namespace CreativeFactory.Web.Controllers
                     if ((model.Tags != null) && !String.IsNullOrWhiteSpace(model.Tags))
                     {
                         SetTags(model.Tags, articleToUpdate);
+                        ClearCache();
                     }
                     else
                     {

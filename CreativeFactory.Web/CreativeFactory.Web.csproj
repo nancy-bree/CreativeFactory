@@ -318,6 +318,7 @@
     <Content Include="Scripts\autosave.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\coffee\tags-autocomplete.coffee" />
     <Content Include="Scripts\dropdown.js" />
     <Content Include="Scripts\g.bar-min.js" />
     <Content Include="Scripts\g.bar.js" />

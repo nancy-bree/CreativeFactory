@@ -42,7 +42,7 @@ namespace CreativeFactory.Web.Controllers
             {
                 tags =
                 _unitOfWork.TagRepository.Get(x => x.OrderBy(y => y.Name));
-                HttpRuntime.Cache["AllTags"] = articles;
+                HttpRuntime.Cache["AllTags"] = tags;
                 //HttpRuntime.Cache.Add("AllTags", tags, null, DateTime.Now.AddHours(1), Cache.NoSlidingExpiration, CacheItemPriority.Normal, new CacheItemRemovedCallback())
             }
             ViewBag.TotalArticlesCount = _unitOfWork.ArticleRepository.Get().Count();
