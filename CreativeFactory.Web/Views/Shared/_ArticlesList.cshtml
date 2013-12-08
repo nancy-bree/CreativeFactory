@@ -21,7 +21,11 @@
             {
                 <p>@Resources.Description: @Truncate(Model.Description, 57)</p>
             }
-            <p>@Resources.Items @Model.Items</p>
+            <p>@Resources.Items @Model.Items 
+                @if (Model.Items > 0)
+                {
+                    @Html.ActionLink("(" + Resources.ReadAll + ")", "ReadAll", "Article", new {id = Model.Id}, null)
+                }</p>
             <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;
             @if (Model.Tags.Count == 0)
             {

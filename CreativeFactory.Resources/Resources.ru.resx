@@ -384,4 +384,13 @@
   <data name="SearchResFor" xml:space="preserve">
     <value>по запросу:</value>
   </data>
+  <data name="ReadAll" xml:space="preserve">
+    <value>Читать полностью</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Содержание</value>
+  </data>
+  <data name="AutosaveUpd" xml:space="preserve">
+    <value>Автосохранение</value>
+  </data>
 </root>

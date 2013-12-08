@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CreativeFactory.Entities.Item>
+
+@{
+    ViewBag.Title = Model.First().Article.Title;
+}
+
+<div class="page-header center">
+    <h1>@ViewBag.Title</h1>
+</div>
+@if (!String.IsNullOrEmpty(Model.First().Article.Description))
+{
+    <blockquote>
+        <p><i>@Html.DisplayFor(m => m.First().Article.Description)</i></p>
+    </blockquote>
+}
+<div>
+    <h3>@Resources.Content</h3>
+    <ol>
+        @foreach (var item in Model)
+        {
+            <li><a href="#@item.Id">@item.Title</a></li>
+        }
+    </ol>
+    <hr/>
+</div>
+
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <h3 id="@item.Id">@item.Title</h3>
+    @Html.Raw(item.Body)
+        <hr/>
+    }
+}

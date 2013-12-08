@@ -384,4 +384,13 @@
   <data name="SearchResFor" xml:space="preserve">
     <value>for</value>
   </data>
+  <data name="ReadAll" xml:space="preserve">
+    <value>Read All</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="AutosaveUpd" xml:space="preserve">
+    <value>Autosave</value>
+  </data>
 </root>

@@ -10,13 +10,11 @@
 <div class="page-header center">
     <h1>@ViewBag.Title</h1>
 </div>
-<p id="message" class="label label-success"></p>
 @using (Html.BeginForm("Add", "Item", FormMethod.Post, new { role = "form", id = "form-to-save", enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
     @Html.AntiForgeryToken()
     
-    @*<input id="ArticleId" value="@ViewBag.ArticleId" style="display:none;" />*@
     @Html.HiddenFor(m => m.ArticleId)
     @Html.HiddenFor(m => m.CookieToken)
 
@@ -34,7 +32,7 @@
         </div>
     
         <div class="form-group col-md-6">
-            <label>@Resources.Preview</label>
+            <label>@Resources.Preview <span id="message" class="label label-success"></span></label>
             <div class="mdd_preview"></div>
         </div>
     </div>

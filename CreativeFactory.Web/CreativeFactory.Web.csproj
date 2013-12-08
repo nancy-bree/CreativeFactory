@@ -410,6 +410,7 @@
     <Content Include="Views\Item\Edit.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Item\Add.cshtml" />
+    <Content Include="Views\Article\ReadAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

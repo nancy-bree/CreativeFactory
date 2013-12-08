@@ -196,5 +196,10 @@ namespace CreativeFactory.Web.Controllers
                 article.Tags.Add(tmp);
             }
         }
+
+        public ActionResult ReadAll(int id)
+        {
+            return View(_unitOfWork.ArticleRepository.GetByID(id).Items);
+        }
     }
 }

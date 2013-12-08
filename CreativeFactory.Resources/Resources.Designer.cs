@@ -160,6 +160,15 @@ namespace CreativeFactory.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Autosave.
+        /// </summary>
+        public static string AutosaveUpd {
+            get {
+                return ResourceManager.GetString("AutosaveUpd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Body of item is required..
         /// </summary>
         public static string BodyFieldCannotBeEmpty {
@@ -183,6 +192,15 @@ namespace CreativeFactory.Resources {
         public static string ConfirmPassword {
             get {
                 return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content.
+        /// </summary>
+        public static string Content {
+            get {
+                return ResourceManager.GetString("Content", resourceCulture);
             }
         }
         
@@ -561,6 +579,15 @@ namespace CreativeFactory.Resources {
         public static string Preview {
             get {
                 return ResourceManager.GetString("Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read All.
+        /// </summary>
+        public static string ReadAll {
+            get {
+                return ResourceManager.GetString("ReadAll", resourceCulture);
             }
         }
         
