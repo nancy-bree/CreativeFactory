@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.IO;
-using System.Web.Caching;
-using CreativeFactory.DAL;
+﻿using CreativeFactory.DAL;
 using CreativeFactory.Entities;
 using CreativeFactory.Web.Models;
 using System;
@@ -10,7 +7,6 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CreativeFactory.Web.Properties;
 using CreativeFactory.Web.Services;
 using WebMatrix.WebData;
 
@@ -34,35 +30,12 @@ namespace CreativeFactory.Web.Controllers
             ViewBag.ArticleId = articleId;
             if (Request.Cookies["_autosave"] != null)
             {
-                var title = String.Empty;
-                if (Request.Cookies["_item-title"] != null)
-                {
-                    title = Request.Cookies["_item-title"].Value;
-                }
-                var cookie = Request.Cookies["_autosave"].Value;
-                var model = new NewItemViewModel
-                {
-                    CookieToken = cookie,
-                    Body = DraftService.GetDraft(cookie),
-                    Title = title
-                };
+                var model = GetNewItemTextFromCookies();
                 return View(model);
             }
             else
             {
-                var cookieToken = Guid.NewGuid().ToString();
-                var model = new NewItemViewModel { CookieToken = cookieToken };
-                var cookie = new HttpCookie("_autosave")
-                {
-                    Value = cookieToken,
-                    Expires = DateTime.Now.AddDays(1)
-                };
-                var titleCookie = new HttpCookie("_item-title")
-                {
-                    Expires = DateTime.Now.AddDays(1)
-                };
-                Response.Cookies.Add(cookie);
-                Response.Cookies.Add(titleCookie);
+                var model = SetNewItemTextToCookies();
                 return View(model);
             }
         }
@@ -85,18 +58,7 @@ namespace CreativeFactory.Web.Controllers
                         Body = model.Body,
                         Title = model.Title
                     };
-                    if (Request.Cookies["_autosave"] != null)
-                    {
-                        var cookie = Request.Cookies["_autosave"];
-                        cookie.Expires = DateTime.Now.AddDays(-1);
-                        Response.Cookies.Set(cookie);
-                    }
-                    if (Request.Cookies["_item-title"] != null)
-                    {
-                        var cookie = Request.Cookies["_item-title"];
-                        cookie.Expires = DateTime.Now.AddDays(-1);
-                        Response.Cookies.Set(cookie);
-                    }
+                    DeleteCookies();
                     DraftService.DeleteDraft(model.CookieToken);
                     AddItem(item);
                     return RedirectToAction("Details", "Article", new { id = model.ArticleId });
@@ -212,6 +174,7 @@ namespace CreativeFactory.Web.Controllers
             return Json(new { success = true });
         }
 
+        #region privateMethods
         private void AddItem(Item model)
         {
             var md = new MarkdownDeep.Markdown {ExtraMode = true};
@@ -280,14 +243,62 @@ namespace CreativeFactory.Web.Controllers
             {
                 HttpRuntime.Cache.Remove("AllArticles");
             }
-            if (HttpRuntime.Cache["UserArticless"] != null)
-            {
-                HttpRuntime.Cache.Remove("UserArticles");
-            }
             if (HttpRuntime.Cache["ActivityStats"] != null)
             {
                 HttpRuntime.Cache.Remove("ActivityStats");
             }
         }
+
+        private NewItemViewModel SetNewItemTextToCookies()
+        {
+            var cookieToken = Guid.NewGuid().ToString();
+            var model = new NewItemViewModel { CookieToken = cookieToken };
+            var cookie = new HttpCookie("_autosave")
+            {
+                Value = cookieToken,
+                Expires = DateTime.Now.AddDays(1)
+            };
+            var titleCookie = new HttpCookie("_item-title")
+            {
+                Expires = DateTime.Now.AddDays(1)
+            };
+            Response.Cookies.Add(cookie);
+            Response.Cookies.Add(titleCookie);
+            return model;
+        }
+
+        private NewItemViewModel GetNewItemTextFromCookies()
+        {
+            var title = String.Empty;
+            if (Request.Cookies["_item-title"] != null)
+            {
+                title = Request.Cookies["_item-title"].Value;
+            }
+            var cookie = Request.Cookies["_autosave"].Value;
+            var model = new NewItemViewModel
+            {
+                CookieToken = cookie,
+                Body = DraftService.GetDraft(cookie),
+                Title = title
+            };
+            return model;
+        }
+
+        private void DeleteCookies()
+        {
+            if (Request.Cookies["_autosave"] != null)
+            {
+                var cookie = Request.Cookies["_autosave"];
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Set(cookie);
+            }
+            if (Request.Cookies["_item-title"] != null)
+            {
+                var cookie = Request.Cookies["_item-title"];
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Set(cookie);
+            }
+        }
+        #endregion
     }
 }

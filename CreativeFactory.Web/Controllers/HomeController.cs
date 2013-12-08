@@ -1,5 +1,4 @@
-﻿using System.Web.Caching;
-using CreativeFactory.DAL;
+﻿using CreativeFactory.DAL;
 using CreativeFactory.Entities;
 using CreativeFactory.Web.Helpers;
 using System;
@@ -29,58 +28,25 @@ namespace CreativeFactory.Web.Controllers
 
         public ActionResult Index(int page = 1)
         {
-            var articles = HttpRuntime.Cache.Get("AllArticles") as IEnumerable<Article>;
-            if (articles == null)
-            {
-                articles =
-                _unitOfWork.ArticleRepository.Get(x => x.OrderByDescending(y => y.CreatedDate));
-                HttpRuntime.Cache["AllArticles"] = articles;
-            }
-            var popularArticles = ArticleService.ArticleUnitViewModelList(_unitOfWork, articles).Where(x => x.Votes > 0);
-            var tags = HttpRuntime.Cache.Get("AllTags") as IEnumerable<Tag>;
-            if (tags == null)
-            {
-                tags =
-                _unitOfWork.TagRepository.Get(x => x.OrderBy(y => y.Name));
-                HttpRuntime.Cache["AllTags"] = tags;
-                //HttpRuntime.Cache.Add("AllTags", tags, null, DateTime.Now.AddHours(1), Cache.NoSlidingExpiration, CacheItemPriority.Normal, new CacheItemRemovedCallback())
-            }
-            ViewBag.TotalArticlesCount = _unitOfWork.ArticleRepository.Get().Count();
-            var model = new MainPageViewModel(tags, popularArticles, page);
+            var model = GetIndexPage(page);
             return View(model);
         }
 
+        [OutputCache(Duration = 600, VaryByParam = "userId")]
         public ActionResult MyArticles(int userId, int page = 1)
         {
-            var userArticles = HttpRuntime.Cache.Get("UserArticles") as IEnumerable<Article>;
-            if (userArticles == null)
-            {
-                userArticles =
-                _unitOfWork.ArticleRepository.Get().Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedDate);
-                HttpRuntime.Cache["UserArticles"] = userArticles;
-            }
-            ViewBag.UserId = userId;
-            var list = ArticleService.ArticleUnitViewModelList(_unitOfWork, userArticles);
+            var list = GetMyArtclesList(userId);
             return View(list
                 .ToPagedList(page, Settings.Default.ArticlesPerPage));
         }
 
         public ActionResult AllArticles(int page = 1)
         {
-
-            var articles = HttpRuntime.Cache.Get("AllArticles") as IEnumerable<Article>;
-            if (articles == null)
-            {
-                articles =
-                _unitOfWork.ArticleRepository.Get(x => x.OrderByDescending(y => y.CreatedDate));
-                HttpRuntime.Cache["AllArticles"] = articles;
-            }
-            var newList = ArticleService.ArticleUnitViewModelList(_unitOfWork, articles);
+            var newList = GetAllArticlesList();
             return View(newList
                 .ToPagedList(page, Settings.Default.ArticlesPerPage));
         }
 
-        
 
         public ActionResult SetCulture(string returnUrl, string culture)
         {
@@ -103,5 +69,52 @@ namespace CreativeFactory.Web.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        #region privateMethods
+        private IEnumerable<ArticleUnitViewModel> GetMyArtclesList(int userId)
+        {
+            var userArticles =
+                    _unitOfWork.ArticleRepository.Get().Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedDate);
+            ViewBag.UserId = userId;
+            var list = ArticleService.ArticleUnitViewModelList(_unitOfWork, userArticles);
+            return list;
+        }
+
+        private IEnumerable<ArticleUnitViewModel> GetAllArticlesList()
+        {
+            var articles = HttpRuntime.Cache.Get("AllArticles") as IEnumerable<Article>;
+            if (articles == null)
+            {
+                articles =
+                    _unitOfWork.ArticleRepository.Get(x => x.OrderByDescending(y => y.CreatedDate));
+                HttpRuntime.Cache["AllArticles"] = articles;
+            }
+            var newList = ArticleService.ArticleUnitViewModelList(_unitOfWork, articles);
+            return newList;
+        }
+
+        private MainPageViewModel GetIndexPage(int page)
+        {
+            var articles = HttpRuntime.Cache.Get("AllArticles") as IEnumerable<Article>;
+            if (articles == null)
+            {
+                articles =
+                    _unitOfWork.ArticleRepository.Get(x => x.OrderByDescending(y => y.CreatedDate));
+                HttpRuntime.Cache["AllArticles"] = articles;
+            }
+            var popularArticles = ArticleService.ArticleUnitViewModelList(_unitOfWork, articles).Where(x => x.Votes > 0).OrderByDescending(x => x.Votes);
+            var tags = HttpRuntime.Cache.Get("AllTags") as IEnumerable<Tag>;
+            if (tags == null)
+            {
+                tags =
+                    _unitOfWork.TagRepository.Get(x => x.OrderBy(y => y.Name));
+                HttpRuntime.Cache["AllTags"] = tags;
+                //HttpRuntime.Cache.Add("AllTags", tags, null, DateTime.Now.AddHours(1), Cache.NoSlidingExpiration, CacheItemPriority.Normal, new CacheItemRemovedCallback())
+            }
+            ViewBag.TotalArticlesCount = _unitOfWork.ArticleRepository.Get().Count();
+            var model = new MainPageViewModel(tags, popularArticles, page);
+            return model;
+        }
+        #endregion
     }
 }

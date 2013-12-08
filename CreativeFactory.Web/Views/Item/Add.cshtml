@@ -58,7 +58,6 @@
             afterSave: function () {
                 $("#message").html("Data saved successfully").show();//...show a message...
                 setTimeout('fadeMessage()', 3000);
-                $.cookie("_item-title", $('#Title').val(), { expires: 1, path: '/' });
             }
         });
     });

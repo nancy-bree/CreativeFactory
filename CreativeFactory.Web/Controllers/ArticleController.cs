@@ -82,22 +82,7 @@ namespace CreativeFactory.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = _unitOfWork.UserRepository.GetByID(WebSecurity.CurrentUserId);
-                    var articleToUpdate = _unitOfWork.ArticleRepository.GetByID(model.Id);
-                    articleToUpdate.Title = model.Title;
-                    articleToUpdate.Description = model.Description;
-                    articleToUpdate.User = user;
-                    if ((model.Tags != null) && !String.IsNullOrWhiteSpace(model.Tags))
-                    {
-                        SetTags(model.Tags, articleToUpdate);
-                        ClearCache();
-                    }
-                    else
-                    {
-                        _unitOfWork.ArticleRepository.DeleteArticleTag(articleToUpdate.Id);
-                    }
-                    _unitOfWork.ArticleRepository.Update(articleToUpdate);
-                    _unitOfWork.Save();
+                    EditArticle(model);
                     return RedirectToAction("MyArticles", "Home", new { userId = WebSecurity.CurrentUserId });
                 }
             }
@@ -115,9 +100,7 @@ namespace CreativeFactory.Web.Controllers
         [HttpPost]
         public JsonResult Delete(int id)
         {
-            _unitOfWork.ArticleRepository.Delete(id);
-            _unitOfWork.Save();
-            ClearCache();
+            DeleteArticle(id);
             return Json(new { success = true });
         }
 
@@ -133,6 +116,15 @@ namespace CreativeFactory.Web.Controllers
             return View(model);
         }
 
+        //
+        // GET: /Article/ReadAll
+
+        public ActionResult ReadAll(int id)
+        {
+            return View(_unitOfWork.ArticleRepository.GetByID(id).Items);
+        }
+
+        #region privateMethods
         private void AddArticle(ArticleViewModel model)
         {
             var article = new Article
@@ -150,6 +142,33 @@ namespace CreativeFactory.Web.Controllers
             ClearCache();
         }
 
+        private void EditArticle(ArticleViewModel model)
+        {
+            var user = _unitOfWork.UserRepository.GetByID(WebSecurity.CurrentUserId);
+            var articleToUpdate = _unitOfWork.ArticleRepository.GetByID(model.Id);
+            articleToUpdate.Title = model.Title;
+            articleToUpdate.Description = model.Description;
+            articleToUpdate.User = user;
+            if ((model.Tags != null) && !String.IsNullOrWhiteSpace(model.Tags))
+            {
+                SetTags(model.Tags, articleToUpdate);
+                ClearCache();
+            }
+            else
+            {
+                _unitOfWork.ArticleRepository.DeleteArticleTag(articleToUpdate.Id);
+            }
+            _unitOfWork.ArticleRepository.Update(articleToUpdate);
+            _unitOfWork.Save();
+        }
+
+        private void DeleteArticle(int id)
+        {
+            _unitOfWork.ArticleRepository.Delete(id);
+            _unitOfWork.Save();
+            ClearCache();
+        }
+
         private static void ClearCache()
         {
             if (HttpRuntime.Cache["PopularArticlesAndVotes"] != null)
@@ -159,10 +178,6 @@ namespace CreativeFactory.Web.Controllers
             if (HttpRuntime.Cache["AllArticles"] != null)
             {
                 HttpRuntime.Cache.Remove("AllArticles");
-            }
-            if (HttpRuntime.Cache["UserArticles"] != null)
-            {
-                HttpRuntime.Cache.Remove("UserArticles");
             }
             if (HttpRuntime.Cache["AllTags"] != null)
             {
@@ -196,10 +211,6 @@ namespace CreativeFactory.Web.Controllers
                 article.Tags.Add(tmp);
             }
         }
-
-        public ActionResult ReadAll(int id)
-        {
-            return View(_unitOfWork.ArticleRepository.GetByID(id).Items);
-        }
+        #endregion
     }
 }
