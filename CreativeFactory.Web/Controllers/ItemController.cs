@@ -26,14 +26,6 @@ namespace CreativeFactory.Web.Controllers
         }
 
         //
-        // GET: /Item/
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        //
         // GET: /Item/Add
 
         [Authorize]
@@ -132,6 +124,19 @@ namespace CreativeFactory.Web.Controllers
                 Body = item.Body,
                 ArticleId = item.ArticleId,
             };
+            if (Request.Cookies[model.Id.ToString()] != null)
+            {
+                model.Body = DraftService.GetDraft(Request.Cookies[model.Id.ToString()].Value);
+            }
+            else
+            {
+                var cookie = new HttpCookie(model.Id.ToString())
+                {
+                    Value = model.Id.ToString(),
+                    Expires = DateTime.Now.AddDays(1)
+                };
+                Response.Cookies.Add(cookie);
+            }
             return View(model);
         }
 
@@ -146,15 +151,7 @@ namespace CreativeFactory.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var article = _unitOfWork.ArticleRepository.GetByID(model.ArticleId);
-                    var itemToUpdate = _unitOfWork.ItemRepository.GetByID(model.Id);
-                    itemToUpdate.Article = article;
-                    itemToUpdate.Title = model.Title;
-                    var md = new MarkdownDeep.Markdown { ExtraMode = true };
-                    var html = md.Transform(model.Body);
-                    itemToUpdate.Body = html;
-                    _unitOfWork.ItemRepository.Update(itemToUpdate);
-                    _unitOfWork.Save();
+                    EditItem(model);
                     return RedirectToAction("Details", "Article", new { id = model.ArticleId });
                 }
             }
@@ -206,11 +203,9 @@ namespace CreativeFactory.Web.Controllers
 
         public ActionResult SaveDraft(FormCollection form)
         {
-            // TODO: Save the form values and return a JSON result 
-            // to indicate if the save went succesfully
-            if (Request.Cookies["_autosave"] != null)
+            if (Request.Cookies[form[1]] != null)
             {
-                var filename = Request.Cookies["_autosave"].Value;
+                var filename = Request.Cookies[form[1]].Value;
                 var content = form[0];
                 DraftService.SaveDraft(filename, content);
             }
@@ -231,6 +226,26 @@ namespace CreativeFactory.Web.Controllers
             _unitOfWork.ItemRepository.Insert(item);
             _unitOfWork.Save();
             ClearCache();
+        }
+
+        private void EditItem(ItemViewModel model)
+        {
+            var article = _unitOfWork.ArticleRepository.GetByID(model.ArticleId);
+            var itemToUpdate = _unitOfWork.ItemRepository.GetByID(model.Id);
+            itemToUpdate.Article = article;
+            itemToUpdate.Title = model.Title;
+            var md = new MarkdownDeep.Markdown { ExtraMode = true };
+            var html = md.Transform(model.Body);
+            itemToUpdate.Body = html;
+            _unitOfWork.ItemRepository.Update(itemToUpdate);
+            _unitOfWork.Save();
+            if (Request.Cookies[model.Id.ToString()] != null)
+            {
+                var cookie = Request.Cookies[model.Id.ToString()];
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Set(cookie);
+            }
+            DraftService.DeleteDraft(model.Id.ToString());
         }
 
         private int GetItemOrder(int articleId)

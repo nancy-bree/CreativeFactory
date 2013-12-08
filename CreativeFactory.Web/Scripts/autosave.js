@@ -13,6 +13,7 @@
 
             var input = $(this);
             var id = input.attr('id');
+            var token = input.data("token");
 
             input.bind('keyup', function(){
                 clearTimeout(timeout[id]);
@@ -21,7 +22,7 @@
 
                     settings.beforeSave.call(this);
 
-                    $.post(settings.url, {content: input.val()}, function(){
+                    $.post(settings.url, {content: input.val(), token: token}, function(){
                         settings.afterSave.call(this);
                     });
 

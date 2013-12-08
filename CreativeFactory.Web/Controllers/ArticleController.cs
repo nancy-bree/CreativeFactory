@@ -160,9 +160,13 @@ namespace CreativeFactory.Web.Controllers
             {
                 HttpRuntime.Cache.Remove("AllArticles");
             }
-            if (HttpRuntime.Cache["UserArticless"] != null)
+            if (HttpRuntime.Cache["UserArticles"] != null)
             {
                 HttpRuntime.Cache.Remove("UserArticles");
+            }
+            if (HttpRuntime.Cache["AllTags"] != null)
+            {
+                HttpRuntime.Cache.Remove("AllTags");
             }
         }
 
@@ -188,10 +192,6 @@ namespace CreativeFactory.Web.Controllers
                     };
                     _unitOfWork.TagRepository.Insert(tmp);
                     _unitOfWork.Save();
-                    if (HttpRuntime.Cache["AllTags"] != null)
-                    {
-                        HttpRuntime.Cache.Remove("AllTags");
-                    }
                 }
                 article.Tags.Add(tmp);
             }
