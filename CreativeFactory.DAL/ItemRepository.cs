@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CreativeFactory.Entities;
 
@@ -23,6 +24,11 @@ namespace CreativeFactory.DAL
 
         public IEnumerable<Item> FindInItems(string searchString)
         {
+            var regexPunctuation = new Regex(@"[^\w\s]");
+            var regexSpaces = new Regex(@"[ ]{2,}", RegexOptions.None);
+            searchString = regexPunctuation.Replace(searchString, @" ");
+            searchString = regexSpaces.Replace(searchString, @" ");
+            searchString = searchString.Trim().Replace(" ", " AND ");
             var query = _context.Item.SqlQuery("SELECT * FROM Items WHERE (CONTAINS(Body, @keyword) OR CONTAINS(Title, @keyword))"
                             ,new SqlParameter("keyword",searchString));
             return query.ToList();
