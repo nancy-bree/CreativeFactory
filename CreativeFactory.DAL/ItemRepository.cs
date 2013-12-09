@@ -15,7 +15,7 @@ namespace CreativeFactory.DAL
 
         public IDictionary<int, int> GetItemsStatistics(int month, int year)
         {
-            var query = (from a in _context.Item
+            var query = (from a in Context.Item
                         where a.CreatedDate.Month == month && a.CreatedDate.Year == year
                         group a by a.CreatedDate.Day into g
                         select new {Day=g.Key, Items= g.Count()}).ToDictionary(x => x.Day, x => x.Items);
@@ -29,7 +29,7 @@ namespace CreativeFactory.DAL
             searchString = regexPunctuation.Replace(searchString, @" ");
             searchString = regexSpaces.Replace(searchString, @" ");
             searchString = searchString.Trim().Replace(" ", " AND ");
-            var query = _context.Item.SqlQuery("SELECT * FROM Items WHERE (CONTAINS(Body, @keyword) OR CONTAINS(Title, @keyword))"
+            var query = Context.Item.SqlQuery("SELECT * FROM Items WHERE (CONTAINS(Body, @keyword) OR CONTAINS(Title, @keyword))"
                             ,new SqlParameter("keyword",searchString));
             return query.ToList();
         }

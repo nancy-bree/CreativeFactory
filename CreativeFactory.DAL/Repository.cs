@@ -12,8 +12,8 @@ namespace CreativeFactory.DAL
     /// <typeparam name="T">Type of entity.</typeparam>
     public class Repository<T> where T : class
     {
-        internal readonly CreativeFactoryContext _context;
-        internal readonly DbSet<T> _dbSet;
+        internal readonly CreativeFactoryContext Context;
+        internal readonly DbSet<T> DbSet;
 
         public Repository(CreativeFactoryContext context)
         {
@@ -21,8 +21,8 @@ namespace CreativeFactory.DAL
             {
                 throw new ArgumentNullException("context");
             }
-            _context = context;
-            _dbSet = context.Set<T>();
+            Context = context;
+            DbSet = context.Set<T>();
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace CreativeFactory.DAL
         /// <returns>Entity.</returns>
         public virtual T GetByID(int id)
         {
-            return _dbSet.Find(id);
+            return DbSet.Find(id);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace CreativeFactory.DAL
         /// <returns>Collection of entities.</returns>
         public virtual IEnumerable<T> Get(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
         {
-            IQueryable<T> query = _dbSet;
+            IQueryable<T> query = DbSet;
             return orderBy != null ? orderBy(query).ToList() : query.ToList();
         }
 
@@ -56,7 +56,7 @@ namespace CreativeFactory.DAL
             {
                 entity.GetType().GetProperty("CreatedDate").SetValue(entity, DateTime.Now);
             }
-            _dbSet.Add(entity);
+            DbSet.Add(entity);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace CreativeFactory.DAL
         /// <param name="id">Entity ID.</param>
         public virtual void Update(int id)
         {
-            T entity = _dbSet.Find(id);
+            T entity = DbSet.Find(id);
             Update(entity);
         }
 
@@ -75,8 +75,8 @@ namespace CreativeFactory.DAL
         /// <param name="entity">Entity to update.</param>
         public virtual void Update(T entity)
         {
-            _dbSet.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
+            DbSet.Attach(entity);
+            Context.Entry(entity).State = EntityState.Modified;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace CreativeFactory.DAL
         /// <param name="id">Entity ID.</param>
         public virtual void Delete(int id)
         {
-            T entity = _dbSet.Find(id);
+            T entity = DbSet.Find(id);
             Delete(entity);
         }
 
@@ -95,11 +95,11 @@ namespace CreativeFactory.DAL
         /// <param name="entity">Entity to delete.</param>
         public virtual void Delete(T entity)
         {
-            if (_context.Entry(entity).State == EntityState.Detached)
+            if (Context.Entry(entity).State == EntityState.Detached)
             {
-                _dbSet.Attach(entity);
+                DbSet.Attach(entity);
             }
-            _dbSet.Remove(entity);
+            DbSet.Remove(entity);
         }
     }
 }

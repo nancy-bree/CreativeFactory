@@ -17,7 +17,7 @@ namespace CreativeFactory.DAL
             //from Ratings
             //where ItemId = 13
             //group by ItemId
-            var query = from r in _context.Rating
+            var query = from r in Context.Rating
                         group r by r.ItemId
                         into g
                         where g.Key == id
@@ -28,7 +28,7 @@ namespace CreativeFactory.DAL
 
         public bool HasVoted(int userId, int itemId)
         {
-            var query = _context.Rating.FirstOrDefault(x => x.UserId == userId && x.ItemId == itemId);
+            var query = Context.Rating.FirstOrDefault(x => x.UserId == userId && x.ItemId == itemId);
             return query != null;
         }
     }

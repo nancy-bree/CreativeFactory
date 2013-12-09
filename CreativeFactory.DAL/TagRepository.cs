@@ -21,7 +21,7 @@ namespace CreativeFactory.DAL
         /// <returns>Tag.</returns>
         public Tag GetTagByName(string name)
         {
-            return _context.Tag.FirstOrDefault(x => x.Name == name);
+            return Context.Tag.FirstOrDefault(x => x.Name == name);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace CreativeFactory.DAL
         /// <returns>List of photos.</returns>
         public IEnumerable<Article> GetArticlesByTag(int tagId)
         {
-            var query = _context.Article.Where(x => x.Tags.Any(y => y.Id == tagId));
+            var query = Context.Article.Where(x => x.Tags.Any(y => y.Id == tagId));
             return query;
         }
     }

@@ -20,7 +20,7 @@ namespace CreativeFactory.DAL
         /// <returns>List of articles contains to a user.</returns>
         public IEnumerable<Article> GetAllUserArticles(int userId)
         {
-            var query = _context.Article.Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedDate);
+            var query = Context.Article.Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedDate);
             return query;
         }
 
@@ -31,7 +31,7 @@ namespace CreativeFactory.DAL
         /// <returns>List of tags.</returns>
         public IEnumerable<Tag> GetArticleTags(int articleId)
         {
-            var query = _context.Tag.Where(x => x.Articles.Any(y => y.Id == articleId));
+            var query = Context.Tag.Where(x => x.Articles.Any(y => y.Id == articleId));
             return query;
         }
 
@@ -66,8 +66,8 @@ namespace CreativeFactory.DAL
             //                           "GROUP BY Items.ArticleId " +
             //                           "ORDER BY COUNT(*) DESC");
 
-            var query = (from item in _context.Item
-                join rating in _context.Rating on item.Id equals rating.ItemId
+            var query = (from item in Context.Item
+                join rating in Context.Rating on item.Id equals rating.ItemId
                 group item by item.ArticleId
                 into result
                 let votes = result.Count()
