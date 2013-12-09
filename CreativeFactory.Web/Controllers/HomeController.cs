@@ -32,7 +32,7 @@ namespace CreativeFactory.Web.Controllers
             return View(model);
         }
 
-        [OutputCache(Duration = 600, VaryByParam = "userId")]
+        //[OutputCache(Duration = 600, VaryByParam = "userId")]
         public ActionResult MyArticles(int userId, int page = 1)
         {
             var list = GetMyArtclesList(userId);

@@ -16,7 +16,7 @@
                     </small>
                 }
             </h4>
-            <h5>@Resources.Author @Model.Username</h5>
+            <h5>@Resources.Author @Html.ActionLink(Model.Username, "MyArticles", "Home", new {userId = Model.UserId}, null)</h5>
             @if (!String.IsNullOrWhiteSpace(Model.Description))
             {
                 <p>@Resources.Description: @Truncate(Model.Description, 57)</p>

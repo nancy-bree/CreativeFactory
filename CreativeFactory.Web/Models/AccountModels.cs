@@ -50,10 +50,10 @@ namespace CreativeFactory.Web.Models
         [StringLength(100, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "UsernameIsTooLong")]
         public string UserName { get; set; }
 
-        //[EmailAddress(ErrorMessageResourceName = "InvalidEmail", ErrorMessageResourceType = typeof (Resources.Resources))]
-        //[Required(ErrorMessageResourceName = "EmailFieldCannotBeEmpty", ErrorMessageResourceType = typeof(Resources.Resources))]
-        //[Display(Name = "Email", ResourceType = typeof(Resources.Resources))]
-        //[StringLength(254, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "EmailIsTooLong")]
+        [EmailAddress(ErrorMessageResourceName = "InvalidEmail", ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessage = null)]
+        [Required(ErrorMessageResourceName = "EmailFieldCannotBeEmpty", ErrorMessageResourceType = typeof(Resources.Resources))]
+        [Display(Name = "Email", ResourceType = typeof(Resources.Resources))]
+        [StringLength(254, ErrorMessageResourceType = typeof(Resources.Resources), ErrorMessageResourceName = "EmailIsTooLong")]
         public string Email { get; set; }
 
         [Required(ErrorMessageResourceName = "PasswordFieldCannotBeEmpty", ErrorMessageResourceType = typeof (Resources.Resources))]
