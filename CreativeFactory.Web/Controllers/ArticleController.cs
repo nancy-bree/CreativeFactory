@@ -164,9 +164,25 @@ namespace CreativeFactory.Web.Controllers
 
         private void DeleteArticle(int id)
         {
+            DeleteCookiesAndDrafts(id);
             _unitOfWork.ArticleRepository.Delete(id);
             _unitOfWork.Save();
             ClearCache();
+        }
+
+        private void DeleteCookiesAndDrafts(int articleId)
+        {
+            var article = _unitOfWork.ArticleRepository.GetByID(articleId);
+            foreach (var item in article.Items)
+            {
+                if (Request.Cookies[item.Id.ToString()] != null)
+                {
+                    var cookie = Request.Cookies[item.Id.ToString()];
+                    cookie.Expires = DateTime.Now.AddDays(-1);
+                    Response.Cookies.Set(cookie);
+                }
+                DraftService.DeleteDraft(item.Id.ToString());
+            }
         }
 
         private static void ClearCache()

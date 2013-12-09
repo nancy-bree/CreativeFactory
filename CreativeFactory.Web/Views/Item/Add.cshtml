@@ -27,7 +27,7 @@
         <div class="form-group col-md-6">
             <div class="mdd_toolbar"></div>
             @Html.TextAreaFor(m => Model.Body, 20, 5,
-            new Dictionary<string, object> { {"class","mdd_editor form-control"}, {"name", "content"}, {"data-token", Model.CookieToken} })
+            new Dictionary<string, object> { {"class","mdd_editor form-control"}, {"name", "content"}, {"data-token", "_autosave"} })
             <div class="mdd_resizer"></div>
             @Html.ValidationMessageFor(m => m.Body)
         </div>
@@ -58,6 +58,7 @@
             afterSave: function () {
                 $("#message").html("Data saved successfully").show();//...show a message...
                 setTimeout('fadeMessage()', 3000);
+                $.cookie("_item-title", $('#Title').val(), { expires: 1, path: '/' });
             }
         });
     });

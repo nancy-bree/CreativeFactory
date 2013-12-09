@@ -142,6 +142,7 @@ namespace CreativeFactory.Web.Controllers
         {
             _unitOfWork.ItemRepository.Delete(id);
             _unitOfWork.Save();
+            DeleteCookiesAndSavedDrafts(id);
             ClearCache();
             return Json(new { success = true });
         }
@@ -165,9 +166,10 @@ namespace CreativeFactory.Web.Controllers
 
         public ActionResult SaveDraft(FormCollection form)
         {
-            if (Request.Cookies[form[1]] != null)
+            var name = form[1];
+            if (Request.Cookies[name] != null)
             {
-                var filename = Request.Cookies[form[1]].Value;
+                var filename = Request.Cookies[name].Value;
                 var content = form[0];
                 DraftService.SaveDraft(filename, content);
             }
@@ -298,6 +300,17 @@ namespace CreativeFactory.Web.Controllers
                 cookie.Expires = DateTime.Now.AddDays(-1);
                 Response.Cookies.Set(cookie);
             }
+        }
+
+        private void DeleteCookiesAndSavedDrafts(int id)
+        {
+            if (Request.Cookies[id.ToString()] != null)
+            {
+                var cookie = Request.Cookies[id.ToString()];
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Set(cookie);
+            }
+            DraftService.DeleteDraft(id.ToString());
         }
         #endregion
     }
